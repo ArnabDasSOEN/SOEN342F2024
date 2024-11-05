@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Ligconsolata:wght@400;700&display=swap');
+
+.hero {
+    background: linear-gradient(180deg, #E2FDFF 0%, #889899 0%, #DDF7F9 0%, white 100%);
+    display: flex;
+    align-items: center;
+}
+
+.hero-left p{
+    padding-left: 150px;
+    font-family: 'Ligconsolata', monospace;
+    font-size: 100px;
+    font-weight: 550;
+    word-wrap: break-word;
+}
+
+.hero-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
