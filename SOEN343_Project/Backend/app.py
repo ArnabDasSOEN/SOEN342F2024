@@ -1,56 +1,40 @@
-from flask import Flask, request, jsonify
-import sqlite3
-import bcrypt
+# app.py
+"""
+This module initializes the Flask application, sets up configurations,
+and registers blueprints for the application routes.
+"""
+import os
+from flask import Flask
+from dbconnection import db  # Import db from extensions
+# Import the blueprint registration function
+from blueprints import register_blueprints
+from config import Config, TestConfig
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+if os.getenv('FLASK_ENV') == 'testing':
+    app.config.from_object(TestConfig)
+else:
+    app.config.from_object(Config)
+
+
+db.init_app(app)  # Initialize db with app
+
+with app.app_context():
+    db.drop_all()
+    db.create_all()  # This creates all tables
 
 
 @app.route('/')
 def home():
-    return "Hello, Flask!"
+    """Return a welcome message for the Flask application."""
+    return "Welcome to the Flask application!"
 
-@app.route('/add_user', methods=['POST'])
-def add_user():
-    data = request.get_json()
 
-    username = data.get('username')
-    password = data.get('password')
-    phoneNumber = data.get('phoneNumber')
-    email = data.get('email')
-
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-
-    cursor.execute('''
-        INSERT INTO customers (username, password, phoneNumber, email)
-        VALUES (?, ?, ?, ?)
-    ''', (username, hashed_password, phoneNumber, email))
-
-    connection.commit()
-    connection.close()
-
-    return jsonify({'message': 'User added successfully'}), 201
-
-@app.route('/login', methods = ['POST'])
-def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-
-    connection = sqlite3.connect('database.db')
-    cursor = connection.cursor()
-
-    cursor.execute('SELECT password FROM users WHERE username = ?', (username,))
-    user_record = cursor.fetchone()
-    connection.close()
-
-    if user_record and bcrypt.checkpw(password.encode('utf-8'), user_record[0]):
-        return jsonify({'message': 'Login successful'}), 200
-    else:
-        return jsonify({'message': 'Invalid username or password'}), 401
-
+# Register all blueprints from the central function
+register_blueprints(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
