@@ -1,0 +1,68 @@
+.loginForm {
+    width: 100vw;
+    left: 50vw;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Avenir&display=swap');
+
+  .loginForm h2 {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 400;
+    font-family: 'Avenir';
+  }
+  
+  .loginForm .login .loginButton {
+    width: 20%;
+    padding: 10px;
+    background-color: #EE2677;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 25px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+  }
+    
+  .loginForm input[type="email"],
+  .loginForm input[type="password"] {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: solid 1px black;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Avenir';
+    font-size: 20px;
+  }
+
+  .loginFormElement label{
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .loginFormElement p{
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+    margin: 10px 0 20px; 
+    padding-top: 20px;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+.loginFormElement span { 
+    background:#fff; 
+    padding:0 25px; 
+}
+
+
+

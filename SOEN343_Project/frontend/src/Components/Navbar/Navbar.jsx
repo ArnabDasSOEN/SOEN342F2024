@@ -1,8 +1,12 @@
-import React from 'react'
+// import React, { useState } from 'react'
 import './Navbar.css'
+import { Link } from 'react-router-dom'
 import deliver_icon from '../Assets/Express_Delivery.png'
 
 export const Navbar = () => {
+
+  // const [menu, setMenu] = useState("landing")
+
   return (
     <div className='navbar'>
       <div className='nav-logo'>
@@ -17,7 +21,7 @@ export const Navbar = () => {
         </ul>
         <div className='login-items'>
           <div className='login'>
-              <li>Login</li>
+              <Link to='/login'><button>Login</button></Link>
           </div>
           <div className='signup'>
             <button>Sign Up</button>

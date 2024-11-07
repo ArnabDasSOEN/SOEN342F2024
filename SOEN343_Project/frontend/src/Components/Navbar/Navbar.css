@@ -26,6 +26,12 @@
     color: black;
     font-size: 20px;
     font-weight: 400;
+    font-family: 'Avenir';
+}
+
+.nav-menu li:hover{
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
 }
 
 .nav-menu li{
@@ -35,6 +41,7 @@
     justify-content: center;
     gap: 3px;
     cursor: pointer;
+    padding: 10px 10px;
 }
 
 .login-items{
@@ -43,14 +50,20 @@
     gap: 45px;
 }
 
-.login li{
-    color: 'black';
+.login button{
+    width: 100px;
+    height: 45px;
+    border: none;
+    border-radius: 10px;
     font-size: 20px;
-    font-family: 'Avenir';
-    font-weight: '400';
-    word-wrap: 'break-word';
-    list-style: none;
+    background: white;
     cursor: pointer;
+    font-family: 'Avenir';
+}
+
+.login button:hover{
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
 }
 
 .signup button{
@@ -63,5 +76,4 @@
     border-radius: 15px;
     background-color: #163760;
     cursor: pointer;
-
 }
