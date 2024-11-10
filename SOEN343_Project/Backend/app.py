@@ -4,9 +4,11 @@ This module initializes the Flask application, sets up configurations,
 and registers blueprints for the application routes.
 """
 import os
-from flask import Flask
+from flask import Flask, request, jsonify
 from dbconnection import db  # Import db from extensions
 # Import the blueprint registration function
+from Models.Customer_Interaction.user import User
+from werkzeug.security import generate_password_hash, check_password_hash
 from blueprints import register_blueprints
 from config import Config, TestConfig
 
@@ -29,6 +31,41 @@ with app.app_context():
 
 @app.route('/')
 def home():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Missing username or password'}), 400
+
+    user = User.query.filter_by(username=username).first()
+    if user:
+        return jsonify({'message': 'User already exists'}), 400
+
+    hashed_password = generate_password_hash(password, method='sha256')
+    new_user = User(username=username, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User created successfully'}), 201
+
+app.route('/signin', methods=['POST'])
+def signin():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Missing username or password'}), 400
+    
+    user = User.query.filter_by(username=username).first()
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({'message': 'Invalid credentials'}), 401
+    
+    return jsonify({'message': 'Successfully signed in'}), 200
+
+app.route('/signup', methods=['POST'])
+def signup():
     """Return a welcome message for the Flask application."""
     return "Welcome to the Flask application!"
 
