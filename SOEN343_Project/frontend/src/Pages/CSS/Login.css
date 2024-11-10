@@ -16,7 +16,7 @@
   
   .loginPage .loginForm .loginButton{
     width: 100%;
-    padding: 10px;
+    padding: 10px 10px;
     background-color: #EE2677;
     color: #fff;
     border: none;
@@ -25,11 +25,12 @@
     cursor: pointer;
     height: 50px;
     font-family: 'Avenir';
+    
   }
     
   .loginForm input[type="email"],
   .loginForm input[type="password"] {
-    width: 100%;
+    width: 95%;
     height: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -40,6 +41,10 @@
     font-size: 20px;
   }
 
+  .loginFormElement {
+    margin-bottom: 20px;
+  }
+
   .loginFormElement label{
     text-align: left;
     display: block;
@@ -48,7 +53,7 @@
     font-weight: 400;
   }
 
-  .loginForm p{
+.otherLoginOptions p{
     width: 100%; 
     text-align: center; 
     border-bottom: 1px solid #000; 
@@ -65,8 +70,24 @@
 }
 
 .company-logos {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.company-logos img{
   width: 60px;
   height: 60px;
-  display: flex;
-  gap: 26px;
+}
+
+.loginForm .signup-link{
+  text-decoration: none;
+  color: #007bff;          
+  font-weight: bold;           
+  transition: color 0.3s;
+}
+
+.loginForm .signup-link:hover{
+  color: #EE2677;
 }

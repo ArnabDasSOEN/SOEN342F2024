@@ -1,21 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Ligconsolata:wght@400;700&display=swap');
-
 .hero {
     background: linear-gradient(180deg, #E2FDFF 0%, #889899 0%, #DDF7F9 0%, white 100%);
     display: flex;
     align-items: center;
+    justify-content: center; 
+    padding: 20px; 
+    gap: 100px;
+    height: 500px;
 }
 
-.hero-left p{
-    padding-left: 150px;
+.hero-left,
+.hero-right {
+    max-width: 500px; 
+    flex: 1;
+}
+
+.hero-left {
     font-family: 'Ligconsolata', monospace;
-    font-size: 100px;
+    font-size: 80px;
     font-weight: 550;
+    text-align: left;
     word-wrap: break-word;
 }
 
-.hero-right{
-    flex: 1;
+.hero-right {
     display: flex;
     align-items: center;
     justify-content: center;

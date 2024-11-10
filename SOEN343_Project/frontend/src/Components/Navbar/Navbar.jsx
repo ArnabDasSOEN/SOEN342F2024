@@ -9,10 +9,12 @@ export const Navbar = () => {
 
   return (
     <div className='navbar'>
-      <div className='nav-logo'>
-        <img src={deliver_icon} alt=''></img>
-        <p>WHEELS UP</p>
-      </div>
+      <Link to='/' className='linkToLanding'>
+        <div className='nav-logo'>
+          <img src={deliver_icon} alt=''></img>
+          <p>WHEELS UP</p>
+        </div>
+      </Link>
         <ul className="nav-menu">
           <li>Tracking</li>
           <li>Proposal</li>

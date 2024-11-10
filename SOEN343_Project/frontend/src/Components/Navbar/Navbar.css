@@ -5,17 +5,28 @@
     justify-content: space-around;
 }
 
+.linkToLanding {
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .nav-logo{
     display: flex;
     align-items: center;
-    gap: 10px
+    gap: 10px;
+    cursor: pointer;
+}
+
+.nav-logo img{
+    height: 60px;
 }
 
 .nav-logo p{
     color: black;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 600;
     font-family: 'Ligconsolata', monospace;
+    text-decoration: none;
 }
 
 .nav-menu{
@@ -29,12 +40,8 @@
     font-family: 'Avenir';
 }
 
-.nav-menu li:hover{
-    background-color: rgb(240, 240, 240);
-    border-radius: 10px;
-}
-
-.nav-menu li{
+.nav-menu li {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,6 +51,22 @@
     padding: 10px 10px;
 }
 
+.nav-menu li::after {
+    content: "";
+    position: absolute;
+    bottom: 5px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: #EE2677;
+    transition: width 0.3s ease;
+}
+
+.nav-menu li:hover::after {
+    width: 100%; 
+}
+
 .login-items{
     display: flex;
     align-items: center;
@@ -51,14 +74,16 @@
 }
 
 .login button{
-    width: 100px;
+    width: 130px;
     height: 45px;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 20px;
     background: white;
     cursor: pointer;
     font-family: 'Avenir';
+    transition: background-color 0.3s ease;
+
 }
 
 .login button:hover{
@@ -76,4 +101,11 @@
     border-radius: 15px;
     background-color: #163760;
     cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.signup button:hover{
+    background-color: #2a6ab8;
+
 }

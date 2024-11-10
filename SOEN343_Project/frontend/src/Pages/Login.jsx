@@ -1,5 +1,6 @@
 import React from 'react'
 import './CSS/Login.css'
+import { Link } from 'react-router-dom'
 import facebook_logo from '../Components/Assets/Facebook.png'
 import google_logo from '../Components/Assets/Google.png'
 import twitter_logo from '../Components/Assets/TwitterX.png'
@@ -20,7 +21,9 @@ export const Login = () => {
                 <br/>
             </div>
             <button type="submit" className="loginButton">Login</button>
-            <p><span>Or with</span></p>
+            <div className='otherLoginOptions'>
+              <p><span>Or with</span></p>
+            </div>
             <div className="company-logos">
               <img src={google_logo} alt="" className="google" />
               <img src={facebook_logo} alt="" className="facebook" />
@@ -28,6 +31,7 @@ export const Login = () => {
               <img src={apple_logo} alt="" className="apple" />
               <img src={amazon_logo} alt="" className="amazon" />
             </div>
+            <p className='signup-from-login'>Don't have an account? <Link className='signup-link'>Sign up here</Link></p>
         </form>
     </div>
   )

@@ -1,0 +1,45 @@
+.search-tracking {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
+
+.search-tracking p {
+    font-size: 24px;
+    font-family: 'Avenir';
+    text-align: center;
+}
+
+.search-input-container {
+    display: flex;
+    gap: 10px; 
+}
+
+.search-tracking input {
+    font-size: 20px;
+    width: 520px;
+    padding: 12px;
+    border: solid 1px black;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Avenir';
+}
+
+.search-tracking button {
+    padding: 12px;
+    font-family: 'Avenir';
+    font-size: 20px;
+    background-color: #163760;
+    color: white;
+    font-weight: 400;
+    width: 100px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.search-tracking button:hover {
+    background-color: #2a6ab8;
+}
