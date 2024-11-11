@@ -11,9 +11,18 @@
     text-align: center;
 }
 
+.search-underline {
+    width: 50%; /* Adjust to make the line longer or shorter */
+    border: none;
+    border-top: 3px solid #EE2677; /* Pink color and thickness */
+    margin: 0 auto 15px auto; 
+    margin-bottom: 30px;
+}
+
 .search-input-container {
     display: flex;
     gap: 10px; 
+    margin-bottom: 30px;
 }
 
 .search-tracking input {
