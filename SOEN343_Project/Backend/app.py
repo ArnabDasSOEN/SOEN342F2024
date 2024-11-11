@@ -1,14 +1,14 @@
-# app.py
-"""
-This module initializes the Flask application, sets up configurations,
-and registers blueprints for the application routes.
-"""
 import os
 from flask import Flask
-from dbconnection import db  # Import db from extensions
-# Import the blueprint registration function
+from dbconnection import db
 from blueprints import register_blueprints
 from config import Config, TestConfig
+
+# Import controllers and OrderFacade
+from Controller.Logistics_Controller.PaymentController import PaymentController
+from Controller.Logistics_Controller.DeliveryController import DeliveryController
+from Controller.Logistics_Controller.OrderController import OrderController
+from Models.Logistics.OrderFacade import OrderFacade
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -19,22 +19,30 @@ if os.getenv('FLASK_ENV') == 'testing':
 else:
     app.config.from_object(Config)
 
-
-db.init_app(app)  # Initialize db with app
+db.init_app(app)
 
 with app.app_context():
-    db.drop_all()
-    db.create_all()  # This creates all tables
+    db.create_all()
+
+    # Initialize controllers
+    payment_controller = PaymentController()
+    delivery_controller = DeliveryController()
+    order_controller = OrderController()
+
+    # Create an instance of OrderFacade with the controllers
+    order_facade = OrderFacade(
+        payment_controller, delivery_controller, order_controller)
+
+    # Make order_facade accessible via app.config
+    app.config['order_facade'] = order_facade
+
+register_blueprints(app)
 
 
 @app.route('/')
 def home():
-    """Return a welcome message for the Flask application."""
     return "Welcome to the Flask application!"
 
-
-# Register all blueprints from the central function
-register_blueprints(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
