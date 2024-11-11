@@ -10,17 +10,15 @@
 .footer-logo {
     display: inline-flex;
     align-items: center;
-    position: relative;
+    gap: 20 px;
 }
 
 .footer-logo p {
-    text-align: center;
     line-height: 0.1em;
     margin: 10px 0 20px;
     font-size: 14px;
     font-weight: 600;
     font-family: 'Ligconsolata', monospace;
-    display: inline-block;
     position: relative;
 }
 
@@ -49,6 +47,6 @@
 
 .footer-copyright p {
     font-size: 10px;
-    margin-top: 10px;
     color: rgb(100, 100, 100);
+    margin-bottom: 20px;
 }

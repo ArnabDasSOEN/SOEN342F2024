@@ -23,10 +23,10 @@ export const Navbar = () => {
         </ul>
         <div className='login-items'>
           <div className='login'>
-              <Link to='/login'><button>Login</button></Link>
+            <Link to='/login'><button>Login</button></Link>
           </div>
           <div className='signup'>
-            <button>Sign Up</button>
+            <Link to='/signup'><button>Sign Up</button></Link>
           </div>
         </div>
     </div>
