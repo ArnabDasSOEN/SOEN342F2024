@@ -4,7 +4,7 @@ This module initializes the Flask application, sets up configurations,
 and registers blueprints for the application routes.
 """
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 from dbconnection import db  # Import db from extensions
 # Import the blueprint registration function
 from Models.Customer_Interaction.user import User
@@ -31,6 +31,29 @@ with app.app_context():
 
 @app.route('/')
 def home():
+    if 'user_id' in session:
+        return jsonify({'message': 'You are signed in'}), 200
+    return jsonify({'message': 'You are not signed in'}), 200
+
+app.route('/signin', methods=['POST'])
+def signin():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({'message': 'Missing username or password'}), 400
+    
+    user = User.query.filter_by(username=username).first()
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({'message': 'Invalid credentials'}), 401
+    
+    session['user_id'] = user.id
+    
+    return jsonify({'message': 'Successfully signed in'}), 200
+
+app.route('/signup', methods=['POST'])
+def signup():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
@@ -49,25 +72,10 @@ def home():
 
     return jsonify({'message': 'User created successfully'}), 201
 
-app.route('/signin', methods=['POST'])
-def signin():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-
-    if not username or not password:
-        return jsonify({'message': 'Missing username or password'}), 400
-    
-    user = User.query.filter_by(username=username).first()
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({'message': 'Invalid credentials'}), 401
-    
-    return jsonify({'message': 'Successfully signed in'}), 200
-
-app.route('/signup', methods=['POST'])
-def signup():
-    """Return a welcome message for the Flask application."""
-    return "Welcome to the Flask application!"
+app.route('/signout')
+def signout():
+    session.clear()
+    return jsonify({'message': 'Successfully signed out'}), 200
 
 
 # Register all blueprints from the central function
