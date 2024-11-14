@@ -5,7 +5,7 @@
     z-index: 1000; 
     cursor: pointer; 
     background-color:#EE2677;
-    border-radius: 101px;
+    border-radius: 100px;
     padding: 10px;
     width: 50px;
     height: 50px;
@@ -13,9 +13,9 @@
 
 .chatbot > .chatbot {
     position: fixed;
-    bottom: 80px;
+    bottom: 90px;
     right: 20px;
-    width: 300px;
+    width: 450px;
     height: 0;
     overflow: hidden;
     background-color: #f1f1f1;
@@ -24,10 +24,22 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    z-index: 1000;
   }
   
   .chatbot > .chatbot.open {
-    height: 400px; 
+    height: 500px; 
+  }
+
+  .chat-header {
+    background-color: #EE2677; 
+    color: white;
+    padding: 15px;
+    font-size: 25px;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: left;
   }
   
   .chat-history {
@@ -42,18 +54,43 @@
   .chat-message {
     margin: 5px 0;
     padding: 8px;
-    background-color: #daf8e3;
+    background-color: #DDF7F9;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
   }
   
   .chat-message strong {
     color: #333;
     margin-right: 5px;
   }
-  
+
+  /* User message bubble */
+.chat-message.user {
+  align-self: flex-end; /* Aligns the message to the right */
+  background-color: #DDF7F9;
+  color: #333;
+  position: relative;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 5px 0;
+  max-width: 80%;
+  display: inline-block;
+}
+
+/* Bot message bubble */
+.chat-message.bot {
+  align-self: flex-start; /* Aligns the bot message to the left */
+  background-color: #f0f0f0;
+  color: #333;
+  position: relative;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 5px 0;
+  max-width: 80%;
+  display: inline-block;
+}
+
   .chatbot textarea {
-    width: calc(100% - 20px);
     margin: 10px;
     padding: 10px;
     height: 50px;
@@ -61,8 +98,9 @@
     border: 1px solid #ccc;
     resize: none;
     outline: none;
-    font-size: 14px;
+    font-size: 18px;
     background-color: #f9f9f9;
+    font-family: 'Avenir';
   }
   
   .chatbot textarea:focus {

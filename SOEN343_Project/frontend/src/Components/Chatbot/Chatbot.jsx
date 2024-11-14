@@ -23,19 +23,20 @@ export const Chatbot = () => {
   return (
     <div className='chatbot'>
         <div className={`chatbot ${isOpen ? 'open' : 'closed'}`}>
+        <div className="chat-header">Wheels Up Chatbot</div>
         <div className="chat-history">
           {messages.map((msg, index) => (
-            <div key={index} className="chat-message">
+              <div key={index} className={`chat-message ${msg.user === 'You' ? 'user' : 'bot'}`}>
               <strong>{msg.user}:</strong> {msg.text}
             </div>
           ))}
         </div>
-            <textarea
+          <textarea
             placeholder="Type your message..."
             onKeyDown={handleSendMessage}
-            />
-        </div>
-        <img src={chat_icon} alt="" onClick={toggleChat}/>
+          />
+      </div>
+      <img src={chat_icon} alt="" onClick={toggleChat}/>
     </div>
   )
 }
