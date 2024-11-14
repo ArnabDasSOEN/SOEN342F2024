@@ -1,4 +1,4 @@
-# Models/Customer_Interaction/user.py
+# models/customer_interaction/user.py
 from dbconnection import db
 
 
@@ -11,11 +11,11 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone_number = db.Column(db.String(15), nullable=True)
     type = db.Column(db.String(20), nullable=False)
-    admin_id = db.Column(db.String(20), nullable=True)  # For Admin users
 
     __mapper_args__ = {
         'polymorphic_on': type,
-        'polymorphic_identity': 'user'
+        'polymorphic_identity': 'user',
+        'with_polymorphic': '*'
     }
 
     def __init__(self, name, password, email, phone_number):

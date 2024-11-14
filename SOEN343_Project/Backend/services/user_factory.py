@@ -1,7 +1,7 @@
 # Models/Customer_Interaction/user_factory.py
-from .admin import Admin
-from .customer import Customer
-from .deliveryAgent import DeliveryAgent
+from models.customer_interaction.admin import Admin
+from models.customer_interaction.customer import Customer
+from models.customer_interaction.delivery_agent import DeliveryAgent
 from dbconnection import db
 
 
