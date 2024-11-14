@@ -1,4 +1,4 @@
-# models/communication/notification_factory.py
+# services/notification_factory.py
 
 from models.communication.email_notification import EmailNotification
 from models.communication.sms_notification import SMSNotification
