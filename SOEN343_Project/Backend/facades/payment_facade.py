@@ -22,20 +22,20 @@ class PaymentFacade:
 
         customer_id = delivery_request.customer_id
 
-        # Dynamically retrieve the Quotation price using delivery_request_id
+        # Retrieve the Quotation price for the delivery_request_id
         quotation = db.session.query(Quotation).filter_by(
             delivery_request_id=delivery_request_id).first()
         if not quotation:
             raise ValueError("Quotation not found for the delivery request")
 
-        amount = quotation.price  # Get price from Quotation
+        amount = quotation.price
 
         # Step 1: Process the payment
         payment_success = PaymentService.process_payment(
             delivery_request_id, payment_method, amount)
 
         if payment_success:
-            # Step 2: Update delivery request status to "paid"
+            # Step 2: Update delivery request status to "Paid"
             delivery_request.status = "Paid"
             db.session.commit()
 
@@ -48,7 +48,7 @@ class PaymentFacade:
             db.session.add(order)
             db.session.commit()
 
-            # Step 4: Create the Payment record
+            # Step 4: Create the Payment record associated with the order
             payment = Payment(
                 customer_id=customer_id,
                 order_id=order.id,
@@ -59,7 +59,7 @@ class PaymentFacade:
             db.session.add(payment)
             db.session.commit()
 
-            # Step 5: Notify other components (e.g., create tracker, update status)
+            # Step 5: Notify OrderFacade to complete the order setup
             self.event_dispatcher.dispatch_event("payment_successful", {
                 "delivery_request_id": delivery_request_id,
                 "customer_id": customer_id,

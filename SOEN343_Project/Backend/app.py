@@ -43,9 +43,7 @@ with app.app_context():
 
     # Add the event listener for order creation
     def handle_payment_successful(event_data):
-        order_facade.create_order(
-            event_data["delivery_request_id"], event_data["customer_id"]
-        )
+        order_facade.finalize_order(event_data["order_id"])
 
     event_dispatcher.add_listener(
         "payment_successful", handle_payment_successful

@@ -2,6 +2,7 @@
 
 from dbconnection import db
 from enum import Enum
+from models.logistics.order import Order
 
 
 class DeliveryStatus(Enum):
@@ -16,11 +17,10 @@ ORDER_STATUS_MAPPING = {
     DeliveryStatus.DELIVERED: "Completed"
 }
 
+
 class Tracker(db.Model):
     __tablename__ = 'trackers'
 
-    #a tracker has an order, a delivery agent and a status.
-    #Format follows: name_of_variable = db.column(type, information specific to the colum)
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey(
         'orders.id'), nullable=False)
@@ -40,12 +40,11 @@ class Tracker(db.Model):
         self.status = status
 
     def update_status(self, new_status):
-        # Update the tracker status
+        # Update the tracker's status attribute
         self.status = new_status.value
         db.session.commit()
 
-        # Update associated order status based on mapping
+        # Update associated order's status using the mapped value
         order_status = ORDER_STATUS_MAPPING.get(new_status)
         if order_status and self.order:
-            self.order.status = order_status
-            db.session.commit()
+            self.order.update_status(order_status)

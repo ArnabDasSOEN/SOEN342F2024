@@ -3,26 +3,40 @@
 from models.logistics.order import Order
 from models.logistics.tracker import Tracker
 from services.delivery_agent_service import DeliveryAgentService
+from services.notification_factory import NotificationFactory
 from dbconnection import db
 
 
 class OrderFacade:
-    def __init__(self, order_controller=None, delivery_controller=None, payment_controller=None):
-        self.order_controller = order_controller
-        self.delivery_controller = delivery_controller
-        self.payment_controller = payment_controller
+    def __init__(self):
+        pass  # No injected dependencies needed
 
-    def create_order(self, delivery_request_id, customer_id):
-        # Create a new order using delivery_request_id and customer_id
-        order = Order(
-            delivery_request_id=delivery_request_id,
-            customer_id=customer_id,
-            status="Processing"
-        )
-        db.session.add(order)
+    def finalize_order(self, order_id):
+        # Retrieve the order using order_id
+        order = db.session.query(Order).get(order_id)
+        if not order:
+            raise ValueError("Order not found")
+
+        # Attach notifications based on customer preferences and add to session
+        customer = order.customer
+        if customer.email:
+            email_notification = NotificationFactory.create_notification(
+                "email", "Your order has been created.", customer.email, order_id=order_id
+            )
+            order.attach(email_notification)
+            db.session.add(email_notification)  # Add to session
+
+        if customer.phone_number:
+            sms_notification = NotificationFactory.create_notification(
+                "sms", "Your order has been created.", customer.phone_number, order_id=order_id
+            )
+            order.attach(sms_notification)
+            db.session.add(sms_notification)  # Add to session
+
+        # Commit the notifications to the database
         db.session.commit()
 
-        # Optionally assign a delivery agent and create a tracker
+        # Assign a delivery agent and create a tracker
         delivery_agent = self.assign_delivery_agent(order)
         if delivery_agent:
             tracker = Tracker(
@@ -33,13 +47,10 @@ class OrderFacade:
             db.session.add(tracker)
             db.session.commit()
 
-        return order
-
     def assign_delivery_agent(self, order):
-        # Use DeliveryAgentService to get a single delivery agent
+        # Use DeliveryAgentService to get a delivery agent
         delivery_agent = DeliveryAgentService.assign_delivery_agent()
         if delivery_agent:
-            # Assign the selected delivery agent to the order
             order.delivery_agent_id = delivery_agent.id
             db.session.commit()
             return delivery_agent
