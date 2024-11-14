@@ -31,8 +31,7 @@ export const SignUp = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/auth/sign_up",
+      const response = await axios.post("http://localhost:5000/auth/sign_up",
         {
           name: formData.name,
           phone_number: formData.phone_number,

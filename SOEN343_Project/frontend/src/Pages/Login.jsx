@@ -33,7 +33,10 @@ export const Login = () => {
       );
 
       // Handle successful login (e.g., redirect or save token)
-      alert(response.data.message); // Optional: Display a success message
+      console.log(response.data);
+      localStorage.setItem("username", response.data.username);
+      console.log("logged user is: ", localStorage.getItem("username"));
+
       navigate("/dashboard"); // Redirect to a dashboard or home page on success
     } catch (err) {
       setError(err.response?.data?.error || "An error occurred during login.");

@@ -6,6 +6,8 @@ from models.customer_interaction.user import User
 from services.user_factory import UserFactory
 from dbconnection import db
 
+#from flask import session
+
 auth_blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 
@@ -54,5 +56,6 @@ def login():
     return jsonify({
         "message": "Login successful!",
         "user_type": user.type,
-        "user_id": user.id
+        "user_id": user.id,
+        "username": user.name
     }), 200

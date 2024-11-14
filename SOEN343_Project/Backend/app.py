@@ -61,11 +61,9 @@ with app.app_context():
 register_blueprints(app)
 
 # Define a home route
-
-
 @app.route('/')
 def home():
-    return "Welcome to the Flask application!"
+    return "OOGA BOOGA"
 
 
 # Run the app
