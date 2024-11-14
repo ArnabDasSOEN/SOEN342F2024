@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_migrate import Migrate
+from flask_cors import CORS
 from dbconnection import db
 from blueprints import register_blueprints
 from config import Config, TestConfig
@@ -13,6 +14,7 @@ from services.event_dispatcher import EventDispatcher
 from services.quotation_service import QuotationService
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
