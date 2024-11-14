@@ -16,10 +16,11 @@ ORDER_STATUS_MAPPING = {
     DeliveryStatus.DELIVERED: "Completed"
 }
 
-
 class Tracker(db.Model):
     __tablename__ = 'trackers'
 
+    #a tracker has an order, a delivery agent and a status.
+    #Format follows: name_of_variable = db.column(type, information specific to the colum)
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey(
         'orders.id'), nullable=False)
