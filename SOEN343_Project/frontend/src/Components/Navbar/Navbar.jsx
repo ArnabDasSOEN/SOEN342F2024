@@ -1,7 +1,7 @@
 // import React, { useState } from 'react'
 import './Navbar.css'
 import { Link } from 'react-router-dom'
-import deliver_icon from '../Assets/Express_Delivery.png'
+import deliver_icon from '../Assets/Express_Delivery_Blue.png'
 
 export const Navbar = () => {
 

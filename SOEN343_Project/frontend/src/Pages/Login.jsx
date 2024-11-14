@@ -19,19 +19,18 @@ export const Login = () => {
           <input type="password"></input>
           <br/>
         </form>
-          <div className='otherLoginOptions'>
-          <button type="submit" className="loginButton">Login</button>
+        <button type="submit" className="loginButton">Login</button>
+        <div className='otherLoginOptions'>
           <p><span>Or with</span></p>
-          </div>
-          <div className="company-logos">
-            <img src={google_logo} alt="" className="google" />
-            <img src={facebook_logo} alt="" className="facebook" />
-            <img src={twitter_logo} alt="" className="twitter" />
-            <img src={apple_logo} alt="" className="apple" />
-            <img src={amazon_logo} alt="" className="amazon" />
-          </div>
-          <p className='signup-from-login'>Don't have an account? <Link to='/signup' className='signup-link'>Sign up here</Link></p>
-        
+        </div>
+        <div className="company-logos">
+          <img src={google_logo} alt="" className="google" />
+          <img src={facebook_logo} alt="" className="facebook" />
+          <img src={twitter_logo} alt="" className="twitter" />
+          <img src={apple_logo} alt="" className="apple" />
+          <img src={amazon_logo} alt="" className="amazon" />
+        </div>
+        <p className='signup-from-login'>Don't have an account? <Link to='/signup' className='signup-link'>Sign up here</Link></p>
     </div>
   )
 }
