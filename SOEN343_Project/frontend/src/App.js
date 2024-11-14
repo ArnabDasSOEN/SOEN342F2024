@@ -5,6 +5,7 @@ import { Landing } from './Pages/Landing';
 import { Login } from './Pages/Login';
 import { Footer } from './Components/Footer/Footer';
 import { SignUp } from './Pages/SignUp';
+import { Chatbot } from './Components/Chatbot/Chatbot';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<SignUp/>}/>
         </Routes>
+        <Chatbot/>
         <Footer/>
       </BrowserRouter>
     </div>
