@@ -1,8 +1,12 @@
 .signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-}
-.signup h2{
     text-align: center;
+}
+
+.signup h2{
     font-size: 48px;
     font-weight: 400;
     font-family: 'Avenir';
@@ -11,14 +15,39 @@
     width: 500px;
     background: white;
     margin: auto;
-    padding: 40px 60px;
 }
-.loginsignup-agree {
-    display: flex;
-    align-items: center;
-    margin-top: 25px;
-    gap: 20px;
-    color: #5c5c5c;
+
+.signup-page label {
+    margin-bottom: 5px;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 400;
+    color: rgb(100, 100, 100);
+    display: flex;
+}
+
+.signup-page input {
+    width: 95%;
+    height: 30px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: solid 1px #c9c9c9;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Avenir';
+    font-size: 20px;
+}
+
+.signup-agree{
+    display: flex;
+}
+
+.login-link {
+    text-decoration: none;
+    color: #007bff;          
+    font-weight: bold;           
+    transition: color 0.3s;
+}
+
+.login-link:hover {
+    color: #EE2677;
 }
