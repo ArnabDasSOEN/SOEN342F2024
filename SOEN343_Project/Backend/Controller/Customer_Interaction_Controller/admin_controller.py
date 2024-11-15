@@ -1,51 +1,47 @@
-# controller/user_controller.py
-
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from Models.Customer_Interaction.user import User
-from services.user_factory import UserFactory
+from Models.Customer_Interaction import admin
+from services import user_factory
 from dbconnection import db
 
-#from flask import session
+admin_auth_blueprint = Blueprint('admin_auth', __name__, url_prefix='/admin_auth')
 
-auth_blueprint = Blueprint('auth', __name__, url_prefix='/auth')
-
-
-@auth_blueprint.route('/sign_up', methods=['POST'])
-def sign_up():
+@admin_auth_blueprint.route('/sign_up', methods=['POST'])
+def admin_signup():
     data = request.json
     name = data.get("name")
     password = data.get("password")
     email = data.get("email")
     phone_number = data.get("phone_number")
+    admin_id = data.get("admin_id")
 
-    # Check if user already exists
-    if User.query.filter_by(email=email).first():
+    # Check if admin already exists
+    if admin.query.filter_by(email=email).first():
         return jsonify({"error": "Email already registered."}), 400
 
-    # Hash the password for security
+    # Hash the password
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
-    # Use UserFactory to create a new customer
-    customer = UserFactory.create_user(
-        user_type="customer",
+    # Use UserFactory to create a new admin
+    customer = user_factory.create_user(
+        user_type="admin",
         name=name,
         password=hashed_password,
         email=email,
-        phone_number=phone_number
+        phone_number=phone_number,
+        admin_id=admin_id
     )
 
-    return jsonify({"message": "Customer account created successfully!"}), 201
+    return jsonify({"message": "Admin account created successfully!"}), 201
 
-
-@auth_blueprint.route('/login', methods=['POST'])
-def login():
+@admin_auth_blueprint.route('/login', methods=['POST'])
+def admin_login():
     data = request.json
     email = data.get("email")
     password = data.get("password")
 
     # Find user by email
-    user = User.query.filter_by(email=email).first()
+    user = admin.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "User not found."}), 404
 

@@ -1,51 +1,45 @@
-# controller/user_controller.py
-
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from Models.Customer_Interaction.user import User
-from services.user_factory import UserFactory
+from Models.Customer_Interaction import delivery_agent
+from services import user_factory
 from dbconnection import db
 
-#from flask import session
+delivery_agent_auth_blueprint = Blueprint('delivery_agent_auth', __name__, url_prefix='/delivery_agent_auth')
 
-auth_blueprint = Blueprint('auth', __name__, url_prefix='/auth')
-
-
-@auth_blueprint.route('/sign_up', methods=['POST'])
-def sign_up():
+@delivery_agent_auth_blueprint.route('/sign_up', methods=['POST'])
+def delivery_agent_signup():
     data = request.json
     name = data.get("name")
     password = data.get("password")
     email = data.get("email")
     phone_number = data.get("phone_number")
 
-    # Check if user already exists
-    if User.query.filter_by(email=email).first():
+    # Check if delivery agent already exists
+    if delivery_agent.query.filter_by(email=email).first():
         return jsonify({"error": "Email already registered."}), 400
 
-    # Hash the password for security
+    # Hash the password
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
-    # Use UserFactory to create a new customer
-    customer = UserFactory.create_user(
-        user_type="customer",
+    # Use UserFactory to create a new delivery agent
+    customer = user_factory.create_user(
+        user_type="delivery_agent",
         name=name,
         password=hashed_password,
         email=email,
         phone_number=phone_number
     )
 
-    return jsonify({"message": "Customer account created successfully!"}), 201
+    return jsonify({"message": "Delivery agent account created successfully!"}), 201
 
-
-@auth_blueprint.route('/login', methods=['POST'])
-def login():
+@delivery_agent_auth_blueprint.route('/login', methods=['POST'])
+def delivery_agent_login():
     data = request.json
     email = data.get("email")
     password = data.get("password")
 
     # Find user by email
-    user = User.query.filter_by(email=email).first()
+    user = delivery_agent.query.filter_by(email=email).first()
     if not user:
         return jsonify({"error": "User not found."}), 404
 
