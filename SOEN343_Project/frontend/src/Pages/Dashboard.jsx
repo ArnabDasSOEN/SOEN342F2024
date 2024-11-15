@@ -43,19 +43,49 @@ export const Dashboard = () => {
     //     ]
     // },
 
+    const [packageItem, setPackageItem] = useState({
+        itemDescription: "",
+        itemQuantity: 0,
+        itemWeight: 0
+    });
 
+    const handlePackageItemChange = (e) => {
+        //the value attribute here isn't the same as the one defined in the value={packageItem.itemDescription}
+        //the value tag in the return section is what is being displayed (which is the current value of packageItem)
+        //the value attribute below is the value of the input when it has changed. They are not the same
+        const {name, value} = e.target;
+        setPackageItem( currItem => ({...currItem, [name]: value}))
+    }
 
+    const [packageItemArray, setPackageItemArray] = useState([])
 
+    const handleAddPackageItem = () => {
+        setPackageItemArray( (currItems) => ([...currItems, packageItem]));
+        setPackageItem({
+            itemDescription: "",
+            itemQuantity: 0,
+            itemWeight: 0
+        });
+    };
 
-
-
+    // const [packageItemDisplayed, setPackageItemDisplayed] = useState(
+    //     packageItemArray.map( item => {
+           
+    //         <div>
+    //             <p>item.itemDescription</p>
+    //             <p>item.itemQuantity</p>
+    //             <p>item.itemWeight</p>
+    //         </div>
+            
+    //     })
+    // )
 
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
 
-        const formData = new FormData(e.target);
-        const formObject = Object.fromEntries(formData.entries()); //data to send to axios post requst to "/create_delivery_request"
+       // const formData = new FormData(e.target);
+        //const formObject = Object.fromEntries(formData.entries()); //data to send to axios post requst to "/create_delivery_request"
     }
 
     const [pickUpAddress, setPickUpAddress] = useState({
@@ -72,9 +102,7 @@ export const Dashboard = () => {
         //using the queue syntax so that we can use the most up to date/relevant data that we need
         //scatter the previous elements of the object, and just update the new one. This event only gets triggered for when an input changes. This means the target will always be that specific input element that changes.
         //hence, it will always have a name and a value (the name tag we specify and the value it contains)
-        setPickUpAddress((prev) => ({ ...prev, [name]: value }),
-    );
-        
+        setPickUpAddress((prev) => ({ ...prev, [name]: value }));
     }
 
     const [dropOffAddress, setDropOffAddress] = useState({
@@ -104,13 +132,15 @@ export const Dashboard = () => {
         width: "",
         height: "",
         weight: "",
-        isFragile: ""
+        isFragile: false,
+        packageItems: packageItemArray
     });
-    //not sure
+    
     const handlePackageChange = (e) => {
         const { name, value } = e.target;
         setPackageInfo((prev) => ({ ...prev, [name]: value }));
-        console.log(packageInfo.isFragile);
+        
+        //console.log(packageInfo.isFragile);
     };
 
 
@@ -215,19 +245,56 @@ export const Dashboard = () => {
                 <h3>Is this item fragile?</h3>
                 <label>
                     yes
-                    <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === true} onChange={handlePackageChange} />
+                    <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === false} onChange={handlePackageChange} />
                 </label>
                 <label>
                     no
                     <input type="radio" name="isFragile" value={false} checked={packageInfo.isFragile === false} onChange={handlePackageChange}/>
                 </label>
+
+
+
+                <h2>Package Items</h2>
+                
+                <label>
+                    item description:
+                    <input type="text" name="itemDescription" value={packageItem.itemDescription} onChange={handlePackageItemChange}></input>
+                </label>
+                <label>
+                    quantity:
+                    <input type="number" name="itemQuantity" value={packageItem.itemQuantity} onChange={handlePackageItemChange}></input>
+                </label>
+                <label>
+                    weight:
+                    <input type="number" name="itemWeight" value={packageItem.itemWeight} onChange={handlePackageItemChange}></input>
+                </label>
+                
+
+
+                <button type="button" onClick={handleAddPackageItem} >Add Package Item</button>
+
+
+
+                    <br/>
+                    <br/>
+                    <br/>
+                   
+
                 <button type="submit">submit delivery request</button>
             </form>
-
-
-
-
+            
+            {packageItemArray.map( (item) => {
+                return(
+                    <div>
+                        <b>NEW ITEM</b>
+                        <p>{item.itemDescription}</p>
+                        <p>{item.itemQuantity}</p>
+                        <p>{item.itemWeight}</p>
+                    </div>
+                )})
+            }
             <Link to="/logout" className="logout">logout</Link>
+
         </main>
     )
 }
