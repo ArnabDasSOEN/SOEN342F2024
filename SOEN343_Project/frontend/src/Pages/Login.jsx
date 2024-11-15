@@ -33,9 +33,10 @@ export const Login = () => {
       );
 
       // Handle successful login (e.g., redirect or save token)
-      console.log(response.data);
+      //console.log(response.data);
       localStorage.setItem("username", response.data.username);
-      console.log("logged user is: ", localStorage.getItem("username"));
+      localStorage.setItem("user_id", response.data.user_id);
+      //console.log("logged user is: ", localStorage.getItem("username"));
 
       navigate("/dashboard"); // Redirect to a dashboard or home page on success
     } catch (err) {
@@ -48,25 +49,13 @@ export const Login = () => {
       <h2>Log In</h2>
       <form className="loginForm" onSubmit={handleSubmit}>
         <label>Email or Username</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
         <br />
         <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
         <br />
         {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="loginButton">
-          Login
-        </button>
+        <button type="submit" className="loginButton">Login</button>
       </form>
       <div className="otherLoginOptions">
         <p>
@@ -82,9 +71,7 @@ export const Login = () => {
       </div>
       <p className="signup-from-login">
         Don't have an account?{" "}
-        <Link to="/signup" className="signup-link">
-          Sign up here
-        </Link>
+        <Link to="/signup" className="signup-link"> Sign up here </Link>
       </p>
     </div>
   );

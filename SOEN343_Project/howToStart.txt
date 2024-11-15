@@ -1,0 +1,6 @@
+go in backend folder, write "pipenv shell"
+Then "flask run --debug"
+
+For frontend, go into frontend folder, then "npm start"
+
+**i am not clarifying what respective packages you need installed. I am assuming you have all the approprirate ones already installed.

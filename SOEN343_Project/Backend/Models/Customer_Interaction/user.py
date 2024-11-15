@@ -1,7 +1,7 @@
 # models/customer_interaction/user.py
 from dbconnection import db
 
-
+#adding db.Model to the params tells SQLAlchemy that this is a table in our database.
 class User(db.Model):
     __tablename__ = 'users'
 

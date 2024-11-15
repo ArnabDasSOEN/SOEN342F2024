@@ -6,6 +6,8 @@ import { Login } from './Pages/Login';
 import { Footer } from './Components/Footer/Footer';
 import { SignUp } from './Pages/SignUp';
 import { Chatbot } from './Components/Chatbot/Chatbot';
+import { Dashboard } from "./Pages/Dashboard";
+import { Logout } from "./Pages/Logout";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path='/' element={<Landing/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/logout' element={<Logout/>}/>
         </Routes>
         <Chatbot/>
         <Footer/>
