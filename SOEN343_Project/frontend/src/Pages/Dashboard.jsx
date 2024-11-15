@@ -80,14 +80,6 @@ export const Dashboard = () => {
     //     })
     // )
 
-
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
-
-       // const formData = new FormData(e.target);
-        //const formObject = Object.fromEntries(formData.entries()); //data to send to axios post requst to "/create_delivery_request"
-    }
-
     const [pickUpAddress, setPickUpAddress] = useState({
         street: "",
         houseNumber: "",
@@ -146,6 +138,26 @@ export const Dashboard = () => {
 
 
 
+    
+    const handleSubmitForm = async (e) => {
+        e.preventDefault();
+           try{
+            const deliveryRequestResponse = await axios.post("http://localhost:5000/create_delivery_request",{
+                    customer_id: localStorage.getItem("user_id"),
+                    pick_up_address: pickUpAddress,
+                    drop_off_address: dropOffAddress,
+                    package: packageInfo,
+                },
+                {headers: {"Content-Type": "application/json"}}
+            )
+
+            console.log(deliveryRequestResponse)
+           }catch (excep){
+            console.log("error: ", excep)
+           }
+    };
+
+  
 
     return (
         <main className="Dashboard">
@@ -162,22 +174,26 @@ export const Dashboard = () => {
 
                 <label>
                     house number:
-                    <input type="number" name="street" value={pickUpAddress.houseNumber} onChange={handlePickUpAddressChange} ></input>
+                    <input type="number" name="houseNumber" value={pickUpAddress.houseNumber} onChange={handlePickUpAddressChange} ></input>
                 </label>
 
                 <label>
                     appartment number (if applies):
-                    <input type="number" name="street" value={pickUpAddress.apartmentNumber} onChange={handlePickUpAddressChange} ></input>
+                    <input type="number" name="apartmentNumber" value={pickUpAddress.apartmentNumber} onChange={handlePickUpAddressChange} ></input>
                 </label>
 
                 <label>
                     POSTAL CODE:
-                    <input type="text" name="street" value={pickUpAddress.postalCode} onChange={handlePickUpAddressChange}></input>
+                    <input type="text" name="postalCode" value={pickUpAddress.postalCode} onChange={handlePickUpAddressChange}></input>
+                </label>
+                <label>
+                    City:
+                    <input type="text" name="city" value={pickUpAddress.city} onChange={handlePickUpAddressChange}></input>
                 </label>
 
                 <label>
                     Country:
-                    <input type="text" name="street" value={pickUpAddress.country} onChange={handlePickUpAddressChange}></input>
+                    <input type="text" name="country" value={pickUpAddress.country} onChange={handlePickUpAddressChange}></input>
                 </label>
 
 
@@ -191,22 +207,27 @@ export const Dashboard = () => {
 
                 <label>
                     house number:
-                    <input type="number" name="street" value={dropOffAddress.houseNumber} onChange={handleDropOffChange}></input>
+                    <input type="number" name="houseNumber" value={dropOffAddress.houseNumber} onChange={handleDropOffChange}></input>
                 </label>
 
                 <label>
                     appartment number (if applies):
-                    <input type="number" name="street" value={dropOffAddress.apartmentNumber} onChange={handleDropOffChange}></input>
+                    <input type="number" name="apartmentNumber" value={dropOffAddress.apartmentNumber} onChange={handleDropOffChange}></input>
                 </label>
 
                 <label>
                     POSTAL CODE:
-                    <input type="text" name="street" value={dropOffAddress.postalCode} onChange={handleDropOffChange}></input>
+                    <input type="text" name="postalCode" value={dropOffAddress.postalCode} onChange={handleDropOffChange}></input>
+                </label>
+
+                <label>
+                    City:
+                    <input type="text" name="city" value={dropOffAddress.city} onChange={handleDropOffChange}></input>
                 </label>
 
                 <label>
                     Country:
-                    <input type="text" name="street" value={dropOffAddress.country} onChange={handleDropOffChange}></input>
+                    <input type="text" name="country" value={dropOffAddress.country} onChange={handleDropOffChange}></input>
                 </label>
 
 
