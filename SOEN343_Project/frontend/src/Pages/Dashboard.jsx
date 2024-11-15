@@ -12,7 +12,8 @@ export const Dashboard = () => {
 
 
 
-
+//inches or pounds
+//cm or kg
 
     return(
         <main className="Dashboard">
