@@ -110,7 +110,9 @@ export const Dashboard = () => {
     const handlePackageChange = (e) => {
         const { name, value } = e.target;
         setPackageInfo((prev) => ({ ...prev, [name]: value }));
+        console.log(packageInfo.isFragile);
     };
+
 
 
 
@@ -213,11 +215,11 @@ export const Dashboard = () => {
                 <h3>Is this item fragile?</h3>
                 <label>
                     yes
-                    <input type="radio" name="isFragile" value="yes" checked={packageInfo.isFragile === 'yes'} onChange={handlePackageChange} />
+                    <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === true} onChange={handlePackageChange} />
                 </label>
                 <label>
                     no
-                    <input type="radio" name="isFragile" value="no" checked={packageInfo.isFragile === 'no'} onChange={handlePackageChange}/>
+                    <input type="radio" name="isFragile" value={false} checked={packageInfo.isFragile === false} onChange={handlePackageChange}/>
                 </label>
                 <button type="submit">submit delivery request</button>
             </form>
