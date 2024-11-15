@@ -51,7 +51,6 @@
   cursor: pointer;
   height: 50px;
   font-family: 'Avenir';
-  display: flex;
   justify-content: center;
   transition: color 0.3s;
 }
