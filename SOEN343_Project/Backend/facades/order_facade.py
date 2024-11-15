@@ -1,7 +1,7 @@
 # facades/order_facade.py
 
-from Models.Logistics.Order import Order
-from Models.Logistics.Tracker import Tracker
+from models.logistics.order import Order
+from models.logistics.tracker import Tracker
 from services.delivery_agent_service import DeliveryAgentService
 from services.notification_factory import NotificationFactory
 from dbconnection import db

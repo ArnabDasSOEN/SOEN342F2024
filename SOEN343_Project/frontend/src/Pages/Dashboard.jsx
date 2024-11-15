@@ -149,7 +149,7 @@ export const Dashboard = () => {
 
     return (
         <main className="Dashboard">
-            <h1>Dashboard</h1>
+            <h1>{localStorage.getItem("username")}'s Dashboard</h1>
             <h2>make request for delivery</h2>
 
             <form action="/create_delivery_request" method="POST" onSubmit={handleSubmitForm}>

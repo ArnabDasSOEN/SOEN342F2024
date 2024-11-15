@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from Models.Customer_Interaction import admin
+from models.customer_interaction import admin
 from services import user_factory
 from dbconnection import db
 

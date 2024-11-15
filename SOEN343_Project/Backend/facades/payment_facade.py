@@ -1,9 +1,9 @@
 # facades/payment_facade.py
 
-from Models.Logistics.delivery_request import DeliveryRequest
-from Models.Logistics.Order import Order
-from Models.Logistics.payment import Payment
-from Models.Customer_Interaction.Quotation import Quotation
+from models.logistics.delivery_request import DeliveryRequest
+from models.logistics.order import Order
+from models.logistics.payment import Payment
+from models.customer_interaction.quotation import Quotation
 from services.payment_service import PaymentService
 from dbconnection import db
 from datetime import datetime

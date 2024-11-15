@@ -1,7 +1,7 @@
 # controller/logistics_controller/delivery_controller.py
 
 from flask import Blueprint, request, jsonify
-from Models.Logistics.Tracker import Tracker, DeliveryStatus
+from models.logistics.tracker import Tracker, DeliveryStatus
 
 delivery_agent_blueprint = Blueprint(
     'delivery_agent', __name__, url_prefix='/delivery_agent')
