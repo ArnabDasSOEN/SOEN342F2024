@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import './CSS/Dashboard.css'
 
 export const Dashboard = () => {
 
@@ -111,7 +112,6 @@ export const Dashboard = () => {
         setDropOffAddress((prev) => ({ ...prev, [name]: value }));
     };
 
-
     //code for imperial units change.
     const [selectedUnit, setSelectedUnit] = useState("imperial units");
     const handleChangeUnits = (e) => {
@@ -135,10 +135,6 @@ export const Dashboard = () => {
         //console.log(packageInfo.isFragile);
     };
 
-
-
-
-    
     const handleSubmitForm = async (e) => {
         e.preventDefault();
            try{
@@ -157,85 +153,65 @@ export const Dashboard = () => {
            }
     };
 
-  
-
     return (
-        <main className="Dashboard">
+        <main className="dashboard">
             <h1>{localStorage.getItem("username")}'s Dashboard</h1>
-            <h2>make request for delivery</h2>
-
+            <h2>Make request for delivery</h2>
             <form action="/create_delivery_request" method="POST" onSubmit={handleSubmitForm}>
-
-                <h3>pick up location</h3>
+                <h3>Pick Up Location</h3>
                 <label>
-                    street:
+                    Street:
                     <input type="text" name="street" value={pickUpAddress.street} onChange={handlePickUpAddressChange} ></input>
                 </label>
-
                 <label>
-                    house number:
+                    House Number:
                     <input type="number" name="houseNumber" value={pickUpAddress.houseNumber} onChange={handlePickUpAddressChange} ></input>
                 </label>
-
                 <label>
-                    appartment number (if applies):
+                    Apartment Number (if applies):
                     <input type="number" name="apartmentNumber" value={pickUpAddress.apartmentNumber} onChange={handlePickUpAddressChange} ></input>
                 </label>
-
                 <label>
-                    POSTAL CODE:
+                    Postal Code:
                     <input type="text" name="postalCode" value={pickUpAddress.postalCode} onChange={handlePickUpAddressChange}></input>
                 </label>
                 <label>
                     City:
                     <input type="text" name="city" value={pickUpAddress.city} onChange={handlePickUpAddressChange}></input>
                 </label>
-
                 <label>
                     Country:
                     <input type="text" name="country" value={pickUpAddress.country} onChange={handlePickUpAddressChange}></input>
                 </label>
-
-
-
-
-                <h3>pick up location</h3>
+                <h3>Drop Off Location</h3>
                 <label>
-                    street:
+                    Street:
                     <input type="text" name="street" value={dropOffAddress.street} onChange={handleDropOffChange} ></input>
                 </label>
-
                 <label>
-                    house number:
+                    House Number:
                     <input type="number" name="houseNumber" value={dropOffAddress.houseNumber} onChange={handleDropOffChange}></input>
                 </label>
-
                 <label>
-                    appartment number (if applies):
+                    Apartment Number (if applies):
                     <input type="number" name="apartmentNumber" value={dropOffAddress.apartmentNumber} onChange={handleDropOffChange}></input>
                 </label>
-
                 <label>
-                    POSTAL CODE:
+                    Postal Code:
                     <input type="text" name="postalCode" value={dropOffAddress.postalCode} onChange={handleDropOffChange}></input>
                 </label>
-
                 <label>
                     City:
                     <input type="text" name="city" value={dropOffAddress.city} onChange={handleDropOffChange}></input>
                 </label>
-
                 <label>
                     Country:
                     <input type="text" name="country" value={dropOffAddress.country} onChange={handleDropOffChange}></input>
                 </label>
-
-
-
-                <h3>Package information</h3>
+                <h3>Package Information</h3>
                 <select value={selectedUnit} onChange={handleChangeUnits}>
-                    <option value="imperial units">imperial units (freedom units - inches and lbs)</option>
-                    <option value="metric units">metric units (non stupid units - cm and kg)</option>
+                    <option value="imperial units">Imperial Units (freedom units - inches and lbs)</option>
+                    <option value="metric units">Metric Units (non stupid units - cm and kg)</option>
                 </select>
                 <div>
                     {selectedUnit === 'imperial units' ? (
@@ -244,66 +220,51 @@ export const Dashboard = () => {
                         <p>You have chosen <b>Metric units</b>. Measurements are in <b>centimeters</b> and <b>kilograms</b>.</p>
                     )}
                 </div>
-
-
                 <label>
-                    length:
+                    Length:
                     <input type="number" name="length" value={packageInfo.length} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    width:
+                    Width:
                     <input type="number" name="width" value={packageInfo.width} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    height:
+                    Height:
                     <input type="number" name="height" value={packageInfo.height} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    weight:
+                    Weight:
                     <input type="number" name="weight" value={packageInfo.weight} onChange={handlePackageChange}></input>
                 </label>
-
                 <h3>Is this item fragile?</h3>
-                <label>
-                    yes
-                    <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === false} onChange={handlePackageChange} />
-                </label>
-                <label>
-                    no
-                    <input type="radio" name="isFragile" value={false} checked={packageInfo.isFragile === false} onChange={handlePackageChange}/>
-                </label>
-
-
-
+                <div className="fragile-option">
+                    <label>
+                        Yes
+                        <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === false} onChange={handlePackageChange} />
+                    </label>
+                    <label>
+                        No
+                        <input type="radio" name="isFragile" value={false} checked={packageInfo.isFragile === false} onChange={handlePackageChange}/>
+                    </label>
+                </div>
                 <h2>Package Items</h2>
-                
                 <label>
-                    item description:
+                    Item Description:
                     <input type="text" name="itemDescription" value={packageItem.itemDescription} onChange={handlePackageItemChange}></input>
                 </label>
                 <label>
-                    quantity:
+                    Quantity:
                     <input type="number" name="itemQuantity" value={packageItem.itemQuantity} onChange={handlePackageItemChange}></input>
                 </label>
                 <label>
-                    weight:
+                    Weight:
                     <input type="number" name="itemWeight" value={packageItem.itemWeight} onChange={handlePackageItemChange}></input>
                 </label>
-                
-
-
-                <button type="button" onClick={handleAddPackageItem} >Add Package Item</button>
-
-
-
-                    <br/>
-                    <br/>
-                    <br/>
-                   
-
-                <button type="submit">submit delivery request</button>
+                <div className="button-container">
+                    <button type="button" onClick={handleAddPackageItem}>Add Package Item</button>
+                    <button type="submit">Submit Delivery Request</button>
+                </div>
             </form>
-            
             {packageItemArray.map( (item) => {
                 return(
                     <div>
@@ -314,8 +275,7 @@ export const Dashboard = () => {
                     </div>
                 )})
             }
-            <Link to="/logout" className="logout">logout</Link>
-
+            <Link to="/logout" className="logout">Log Out</Link>
         </main>
     )
 }

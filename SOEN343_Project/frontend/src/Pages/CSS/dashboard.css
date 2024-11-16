@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Avenir&display=swap');
+
+.dashboard {
+    font-family: 'Avenir';
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.dashboard h2, h3 {
+    margin-top: 20px;
+    color: #333;
+    text-transform: uppercase;
+    /* font-size: 1.2rem; */
+}
+
+.dashboardform {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.fragile-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; /* Distributes space evenly between radio options */
+    margin-bottom: 15px;
+}
+
+.fragile-option label {
+    font-size: 1rem;
+    margin: 0 10px;
+}
+
+.fragile-option input[type="radio"] {
+    margin-right: 5px; /* Adds a bit of space between the radio button and label */
+}
+
+.dashboard input, select {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.2s;
+}
+
+.dashboard input:focus, select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.dashboard button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dashboard button:hover {
+    background-color: #0056b3;
+}
+
+.dashboard button[type="button"] {
+    margin-bottom: 10px;
+}
+
+.dashboard div {
+    margin-bottom: 10px;
+}
+
+.dashboard .logout {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.dashboard .logout:hover {
+    color: #EE2677;
+}
+
+.dashboard p {
+    margin: 5px 0;
+}
+
+.dashboard b {
+    color: #333;
+}
+
+.dashboard .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Optional: Adds space between buttons */
+}
+
+.dashboard button[type="submit"],
+.dashboard button[type="button"] {
+    width: auto;
+    margin: 0; /* Remove margin if you want them closer */
+}
