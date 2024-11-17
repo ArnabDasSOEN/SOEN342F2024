@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
 import './CSS/dashboard.css'
 
 export const Dashboard = () => {
@@ -66,6 +66,7 @@ export const Dashboard = () => {
             quantity: 0,
             weight_lb: 0
         });
+        //console.log(packageItemArray)
     };
 
 
@@ -109,7 +110,7 @@ export const Dashboard = () => {
         height_in: "",
         weight_lb: "",
         is_fragile: false,
-        package_items: packageItemArray
+        package_items: []
     });
     
     const handlePackageChange = (e) => {
@@ -118,76 +119,74 @@ export const Dashboard = () => {
     };
 
     //resetting all input values
-    const resetAllInputs = () => {
-        setPackageItem({
-            item_description: "",
-            quantity: 0,
-            weight_lb: 0
-        })
+    // const resetAllInputs = () => {
+    //     setPackageItem({
+    //         item_description: "",
+    //         quantity: 0,
+    //         weight_lb: 0
+    //     })
 
-        setPackageItemArray([])
+    //     setPackageItemArray([])
 
-        setPickUpAddress({
-            street: "",
-            house_number: "",
-            apartment_number: "",
-            postal_code: "",
-            city: "",
-            country: ""
-        })
+    //     setPickUpAddress({
+    //         street: "",
+    //         house_number: "",
+    //         apartment_number: "",
+    //         postal_code: "",
+    //         city: "",
+    //         country: ""
+    //     })
 
-        setDropOffAddress({
-            street: "",
-            house_number: "",
-            apartment_number: "",
-            postal_code: "",
-            city: "",
-            country: ""
-        })
+    //     setDropOffAddress({
+    //         street: "",
+    //         house_number: "",
+    //         apartment_number: "",
+    //         postal_code: "",
+    //         city: "",
+    //         country: ""
+    //     })
 
-        setSelectedUnit("imperial")
+    //     setSelectedUnit("imperial")
 
-        setPackageInfo({
-            unit_system: selectedUnit,
-            length: "",
-            width_in: "",
-            height_in: "",
-            weight_lb: "",
-            is_fragile: false,
-            package_items: packageItemArray
-        })
-    }
+    //     setPackageInfo({
+    //         unit_system: selectedUnit,
+    //         length: "",
+    //         width_in: "",
+    //         height_in: "",
+    //         weight_lb: "",
+    //         is_fragile: false,
+    //         package_items: packageItemArray
+    //     })
+    // }
 
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
        
-        const clientID = localStorage.getItem("user_id")
-        
+         const customerId = localStorage.getItem("user_id");
+        // customerId = {customerId};
+
+        //package_items
+        const packageInfoObj = {...packageInfo, package_items: packageItemArray }
+
         const deliveryDataObj = {
-            customer_id: {clientID},
+            //customer_id: {customerId},
+            customer_id: customerId,
             pick_up_address: pickUpAddress,
             drop_off_address: dropOffAddress,
-            package: packageInfo
+            //package: packageInfo
+            package: packageInfoObj
         }
         console.log(deliveryDataObj)
-        
 
-
-
-            axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
-                .then( (response) => {
-                    console.log("response: ", response);
-                    resetAllInputs();
-                }).catch( e => {
-                    console.log("error making delivery request", e);
-                })
+            // axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
+            //     .then( (response) => {
+            //         console.log("response: ", response);
+            //         resetAllInputs();
+            //     }).catch( e => {
+            //         console.log("error making delivery request", e);
+            //     })
     }//end of form submission.
-
-
-
-      
-    
 
     return (
         <main className="dashboard">
