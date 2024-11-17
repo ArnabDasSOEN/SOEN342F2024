@@ -25,7 +25,7 @@ export const Dashboard = () => {
     // },
     // "package": {
     //     "unit_system": "imperial",
-    //     "width_in": 10,
+    //     "width_in_in": 10,
     //     "length_in": 20,
     //     "height_in": 5,
     //     "weight_lb": 30,
@@ -34,62 +34,49 @@ export const Dashboard = () => {
     //         {
     //             "item_description": "Glass Vase",
     //             "quantity": 2,
-    //             "weight": 1.5
+    //             "weight_lb": 1.5
     //         },
     //         {
     //             "item_description": "Fragile Sculpture",
     //             "quantity": 1,
-    //             "weight": 2.0
+    //             "weight_lb": 2.0
     //         }
     //     ]
     // },
 
     const [packageItem, setPackageItem] = useState({
-        itemDescription: "",
-        itemQuantity: 0,
-        itemWeight: 0
+        item_description: "",
+        quantity: 0,
+        weight_lb: 0
     });
-
     const handlePackageItemChange = (e) => {
-        //the value attribute here isn't the same as the one defined in the value={packageItem.itemDescription}
+        //the value attribute here isn't the same as the one defined in the value={packageItem.item_description}
         //the value tag in the return section is what is being displayed (which is the current value of packageItem)
         //the value attribute below is the value of the input when it has changed. They are not the same
         const {name, value} = e.target;
         setPackageItem( currItem => ({...currItem, [name]: value}))
     }
 
-    const [packageItemArray, setPackageItemArray] = useState([])
 
+    const [packageItemArray, setPackageItemArray] = useState([])
     const handleAddPackageItem = () => {
         setPackageItemArray( (currItems) => ([...currItems, packageItem]));
         setPackageItem({
-            itemDescription: "",
-            itemQuantity: 0,
-            itemWeight: 0
+            item_description: "",
+            quantity: 0,
+            weight_lb: 0
         });
     };
 
-    // const [packageItemDisplayed, setPackageItemDisplayed] = useState(
-    //     packageItemArray.map( item => {
-           
-    //         <div>
-    //             <p>item.itemDescription</p>
-    //             <p>item.itemQuantity</p>
-    //             <p>item.itemWeight</p>
-    //         </div>
-            
-    //     })
-    // )
 
     const [pickUpAddress, setPickUpAddress] = useState({
         street: "",
-        houseNumber: "",
-        apartmentNumber: "",
-        postalCode: "",
+        house_number: "",
+        apartment_number: "",
+        postal_code: "",
         city: "",
         country: ""
     });
-
     const handlePickUpAddressChange = (e) => {
         const { name, value } = e.target;
         //using the queue syntax so that we can use the most up to date/relevant data that we need
@@ -100,58 +87,107 @@ export const Dashboard = () => {
 
     const [dropOffAddress, setDropOffAddress] = useState({
         street: "",
-        houseNumber: "",
-        apartmentNumber: "",
-        postalCode: "",
+        house_number: "",
+        apartment_number: "",
+        postal_code: "",
         city: "",
         country: ""
     });
-    //nott sure
     const handleDropOffChange = (e) => {
         const { name, value } = e.target;
         setDropOffAddress((prev) => ({ ...prev, [name]: value }));
     };
 
-    //code for imperial units change.
-    const [selectedUnit, setSelectedUnit] = useState("imperial units");
+    const [selectedUnit, setSelectedUnit] = useState("imperial");
     const handleChangeUnits = (e) => {
         setSelectedUnit(e.target.value);
     }
-
     const [packageInfo, setPackageInfo] = useState({
-        unitSystem: selectedUnit,
+        unit_system: selectedUnit,
         length: "",
-        width: "",
-        height: "",
-        weight: "",
-        isFragile: false,
-        packageItems: packageItemArray
+        width_in: "",
+        height_in: "",
+        weight_lb: "",
+        is_fragile: false,
+        package_items: packageItemArray
     });
     
     const handlePackageChange = (e) => {
         const { name, value } = e.target;
         setPackageInfo((prev) => ({ ...prev, [name]: value }));
-        
-        //console.log(packageInfo.isFragile);
     };
 
-    const handleSubmitForm = async (e) => {
+    //resetting all input values
+    const resetAllInputs = () => {
+        setPackageItem({
+            item_description: "",
+            quantity: 0,
+            weight_lb: 0
+        })
+
+        setPackageItemArray([])
+
+        setPickUpAddress({
+            street: "",
+            house_number: "",
+            apartment_number: "",
+            postal_code: "",
+            city: "",
+            country: ""
+        })
+
+        setDropOffAddress({
+            street: "",
+            house_number: "",
+            apartment_number: "",
+            postal_code: "",
+            city: "",
+            country: ""
+        })
+
+        setSelectedUnit("imperial")
+
+        setPackageInfo({
+            unit_system: selectedUnit,
+            length: "",
+            width_in: "",
+            height_in: "",
+            weight_lb: "",
+            is_fragile: false,
+            package_items: packageItemArray
+        })
+    }
+
+
+    const handleSubmitForm = (e) => {
         e.preventDefault();
-           try{
-            const deliveryRequestResponse = await axios.post("http://localhost:5000/create_delivery_request",{
-                    customer_id: localStorage.getItem("user_id"),
-                    pick_up_address: pickUpAddress,
-                    drop_off_address: dropOffAddress,
-                    package: packageInfo,
-                },
-                {headers: {"Content-Type": "application/json"}}
-            )
+       
+        const clientID = localStorage.getItem("user_id")
+        
+        const deliveryDataObj = {
+            customer_id: {clientID},
+            pick_up_address: pickUpAddress,
+            drop_off_address: dropOffAddress,
+            package: packageInfo
+        }
+        console.log(deliveryDataObj)
+        
 
-            console.log(deliveryRequestResponse)
-           }catch (excep){
-            console.log("error: ", excep)
-           }
-    };
+
+
+            axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
+                .then( (response) => {
+                    console.log("response: ", response);
+                    resetAllInputs();
+                }).catch( e => {
+                    console.log("error making delivery request", e);
+                })
+    }//end of form submission.
+
+
+
+      
+    
 
     return (
         <main className="dashboard">
@@ -165,15 +201,15 @@ export const Dashboard = () => {
                 </label>
                 <label>
                     House Number:
-                    <input type="number" name="houseNumber" value={pickUpAddress.houseNumber} onChange={handlePickUpAddressChange} ></input>
+                    <input type="number" name="house_number" value={pickUpAddress.house_number} onChange={handlePickUpAddressChange} ></input>
                 </label>
                 <label>
                     Apartment Number (if applies):
-                    <input type="number" name="apartmentNumber" value={pickUpAddress.apartmentNumber} onChange={handlePickUpAddressChange} ></input>
+                    <input type="number" name="apartment_number" value={pickUpAddress.apartment_number} onChange={handlePickUpAddressChange} ></input>
                 </label>
                 <label>
                     Postal Code:
-                    <input type="text" name="postalCode" value={pickUpAddress.postalCode} onChange={handlePickUpAddressChange}></input>
+                    <input type="text" name="postal_code" value={pickUpAddress.postal_code} onChange={handlePickUpAddressChange}></input>
                 </label>
                 <label>
                     City:
@@ -190,15 +226,15 @@ export const Dashboard = () => {
                 </label>
                 <label>
                     House Number:
-                    <input type="number" name="houseNumber" value={dropOffAddress.houseNumber} onChange={handleDropOffChange}></input>
+                    <input type="number" name="house_number" value={dropOffAddress.house_number} onChange={handleDropOffChange}></input>
                 </label>
                 <label>
                     Apartment Number (if applies):
-                    <input type="number" name="apartmentNumber" value={dropOffAddress.apartmentNumber} onChange={handleDropOffChange}></input>
+                    <input type="number" name="apartment_number" value={dropOffAddress.apartment_number} onChange={handleDropOffChange}></input>
                 </label>
                 <label>
                     Postal Code:
-                    <input type="text" name="postalCode" value={dropOffAddress.postalCode} onChange={handleDropOffChange}></input>
+                    <input type="text" name="postal_code" value={dropOffAddress.postal_code} onChange={handleDropOffChange}></input>
                 </label>
                 <label>
                     City:
@@ -210,11 +246,11 @@ export const Dashboard = () => {
                 </label>
                 <h3>Package Information</h3>
                 <select value={selectedUnit} onChange={handleChangeUnits}>
-                    <option value="imperial units">Imperial Units (freedom units - inches and lbs)</option>
-                    <option value="metric units">Metric Units (non stupid units - cm and kg)</option>
+                    <option value="imperial">Imperial Units (freedom units - inches and lbs)</option>
+                    <option value="metric">Metric Units (non stupid units - cm and kg)</option>
                 </select>
                 <div>
-                    {selectedUnit === 'imperial units' ? (
+                    {selectedUnit === 'imperial' ? (
                         <p>You have chosen <b>Imperial units</b>. Measurements are in <b>inches</b> and <b>pounds</b>.</p>
                     ) : (
                         <p>You have chosen <b>Metric units</b>. Measurements are in <b>centimeters</b> and <b>kilograms</b>.</p>
@@ -225,40 +261,40 @@ export const Dashboard = () => {
                     <input type="number" name="length" value={packageInfo.length} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    Width:
-                    <input type="number" name="width" value={packageInfo.width} onChange={handlePackageChange}></input>
+                    width:
+                    <input type="number" name="width_in" value={packageInfo.width_in} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    Height:
-                    <input type="number" name="height" value={packageInfo.height} onChange={handlePackageChange}></input>
+                    height:
+                    <input type="number" name="height_in" value={packageInfo.height_in} onChange={handlePackageChange}></input>
                 </label>
                 <label>
-                    Weight:
-                    <input type="number" name="weight" value={packageInfo.weight} onChange={handlePackageChange}></input>
+                    weight:
+                    <input type="number" name="weight_lb" value={packageInfo.weight_lb} onChange={handlePackageChange}></input>
                 </label>
                 <h3>Is this item fragile?</h3>
                 <div className="fragile-option">
                     <label>
                         Yes
-                        <input type="radio" name="isFragile" value={true} checked={packageInfo.isFragile === false} onChange={handlePackageChange} />
+                        <input type="radio" name="is_fragile" value={true} checked={packageInfo.is_fragile === false} onChange={handlePackageChange} />
                     </label>
                     <label>
                         No
-                        <input type="radio" name="isFragile" value={false} checked={packageInfo.isFragile === false} onChange={handlePackageChange}/>
+                        <input type="radio" name="is_fragile" value={false} checked={packageInfo.is_fragile === false} onChange={handlePackageChange}/>
                     </label>
                 </div>
                 <h2>Package Items</h2>
                 <label>
                     Item Description:
-                    <input type="text" name="itemDescription" value={packageItem.itemDescription} onChange={handlePackageItemChange}></input>
+                    <input type="text" name="item_description" value={packageItem.item_description} onChange={handlePackageItemChange}></input>
                 </label>
                 <label>
                     Quantity:
-                    <input type="number" name="itemQuantity" value={packageItem.itemQuantity} onChange={handlePackageItemChange}></input>
+                    <input type="number" name="quantity" value={packageItem.quantity} onChange={handlePackageItemChange}></input>
                 </label>
                 <label>
-                    Weight:
-                    <input type="number" name="itemWeight" value={packageItem.itemWeight} onChange={handlePackageItemChange}></input>
+                    weight:
+                    <input type="number" name="weight_lb" value={packageItem.weight_lb} onChange={handlePackageItemChange}></input>
                 </label>
                 <div className="button-container">
                     <button type="button" onClick={handleAddPackageItem}>Add Package Item</button>
@@ -269,9 +305,9 @@ export const Dashboard = () => {
                 return(
                     <div>
                         <b>NEW ITEM</b>
-                        <p>{item.itemDescription}</p>
-                        <p>{item.itemQuantity}</p>
-                        <p>{item.itemWeight}</p>
+                        <p>{item.item_description}</p>
+                        <p>{item.quantity}</p>
+                        <p>{item.weight_lb}</p>
                     </div>
                 )})
             }
