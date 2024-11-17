@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-//import axios from "axios";
+import axios from "axios";
 import './CSS/dashboard.css'
 
 export const Dashboard = () => {
@@ -47,7 +47,7 @@ export const Dashboard = () => {
     const [packageItem, setPackageItem] = useState({
         item_description: "",
         quantity: 0,
-        weight_lb: 0
+        weight: 0
     });
     const handlePackageItemChange = (e) => {
         //the value attribute here isn't the same as the one defined in the value={packageItem.item_description}
@@ -64,7 +64,7 @@ export const Dashboard = () => {
         setPackageItem({
             item_description: "",
             quantity: 0,
-            weight_lb: 0
+            weight: 0
         });
         //console.log(packageItemArray)
     };
@@ -105,7 +105,7 @@ export const Dashboard = () => {
     }
     const [packageInfo, setPackageInfo] = useState({
         unit_system: selectedUnit,
-        length: "",
+        length_in: "",
         width_in: "",
         height_in: "",
         weight_lb: "",
@@ -119,45 +119,45 @@ export const Dashboard = () => {
     };
 
     //resetting all input values
-    // const resetAllInputs = () => {
-    //     setPackageItem({
-    //         item_description: "",
-    //         quantity: 0,
-    //         weight_lb: 0
-    //     })
+    const resetAllInputs = () => {
+        setPackageItem({
+            item_description: "",
+            quantity: 0,
+            weight_lb: 0
+        })
 
-    //     setPackageItemArray([])
+        setPackageItemArray([])
 
-    //     setPickUpAddress({
-    //         street: "",
-    //         house_number: "",
-    //         apartment_number: "",
-    //         postal_code: "",
-    //         city: "",
-    //         country: ""
-    //     })
+        setPickUpAddress({
+            street: "",
+            house_number: "",
+            apartment_number: "",
+            postal_code: "",
+            city: "",
+            country: ""
+        })
 
-    //     setDropOffAddress({
-    //         street: "",
-    //         house_number: "",
-    //         apartment_number: "",
-    //         postal_code: "",
-    //         city: "",
-    //         country: ""
-    //     })
+        setDropOffAddress({
+            street: "",
+            house_number: "",
+            apartment_number: "",
+            postal_code: "",
+            city: "",
+            country: ""
+        })
 
-    //     setSelectedUnit("imperial")
+        setSelectedUnit("imperial")
 
-    //     setPackageInfo({
-    //         unit_system: selectedUnit,
-    //         length: "",
-    //         width_in: "",
-    //         height_in: "",
-    //         weight_lb: "",
-    //         is_fragile: false,
-    //         package_items: packageItemArray
-    //     })
-    // }
+        setPackageInfo({
+            unit_system: selectedUnit,
+            length_in: "",
+            width_in: "",
+            height_in: "",
+            weight_lb: "",
+            is_fragile: false,
+            package_items: packageItemArray
+        })
+    }
 
 
     const handleSubmitForm = (e) => {
@@ -179,13 +179,13 @@ export const Dashboard = () => {
         }
         console.log(deliveryDataObj)
 
-            // axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
-            //     .then( (response) => {
-            //         console.log("response: ", response);
-            //         resetAllInputs();
-            //     }).catch( e => {
-            //         console.log("error making delivery request", e);
-            //     })
+            axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
+                .then( (response) => {
+                    console.log("response: ", response);
+                    resetAllInputs();
+                }).catch( e => {
+                    console.log("error making delivery request", e);
+                })
     }//end of form submission.
 
     return (
@@ -256,8 +256,8 @@ export const Dashboard = () => {
                     )}
                 </div>
                 <label>
-                    Length:
-                    <input type="number" name="length" value={packageInfo.length} onChange={handlePackageChange}></input>
+                    length:
+                    <input type="number" name="length_in" value={packageInfo.length_in} onChange={handlePackageChange}></input>
                 </label>
                 <label>
                     width:
@@ -293,7 +293,7 @@ export const Dashboard = () => {
                 </label>
                 <label>
                     weight:
-                    <input type="number" name="weight_lb" value={packageItem.weight_lb} onChange={handlePackageItemChange}></input>
+                    <input type="number" name="weight" value={packageItem.weight} onChange={handlePackageItemChange}></input>
                 </label>
                 <div className="button-container">
                     <button type="button" onClick={handleAddPackageItem}>Add Package Item</button>
@@ -306,7 +306,7 @@ export const Dashboard = () => {
                         <b>NEW ITEM</b>
                         <p>{item.item_description}</p>
                         <p>{item.quantity}</p>
-                        <p>{item.weight_lb}</p>
+                        <p>{item.weight}</p>
                     </div>
                 )})
             }
