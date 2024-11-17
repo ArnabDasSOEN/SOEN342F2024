@@ -11,7 +11,7 @@ import { Logout } from "./Pages/Logout";
 
 function App() {
   return (
-    <div>
+    <div className='App'>
       <BrowserRouter>
         <Navbar/>
         <Routes>

@@ -3,9 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
     background-color: black;
-    margin-top: 20px;
+    margin-top: auto;
     padding-top: 20px;
 }
 
