@@ -18,24 +18,42 @@ def sign_up():
     password = data.get("password")
     email = data.get("email")
     phone_number = data.get("phone_number")
+    user_type = data.get("user_type", "customer")  # Default to customer
+    admin_id = data.get("admin_id")  # Only required for Admin creation
 
     # Check if user already exists
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "Email already registered."}), 400
 
+    # Validate user_type
+    if user_type.lower() in ["admin", "deliveryagent"]:
+        # Check if current user is an admin
+        current_user_id = data.get("current_user_id")  # Sent in the request
+        current_user = User.query.get(current_user_id)
+
+        if not current_user or current_user.type.lower() != "admin":
+            return jsonify({"error": "Only admins can create Admin or DeliveryAgent accounts."}), 403
+
     # Hash the password for security
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
-    # Use UserFactory to create a new customer
-    customer = UserFactory.create_user(
-        user_type="customer",
-        name=name,
-        password=hashed_password,
-        email=email,
-        phone_number=phone_number
-    )
+    try:
+        # Use UserFactory to create a new user
+        user = UserFactory.create_user(
+            user_type=user_type,
+            name=name,
+            password=hashed_password,
+            email=email,
+            phone_number=phone_number,
+            admin_id=admin_id if user_type.lower() == "admin" else None
+        )
 
-    return jsonify({"message": "Customer account created successfully!"}), 201
+        return jsonify({"message": f"{user_type} account created successfully!"}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
 
 
 @auth_blueprint.route('/login', methods=['POST'])

@@ -20,6 +20,10 @@ class PaymentFacade:
         if not delivery_request:
             raise ValueError("Delivery request not found")
 
+        # Check if the DeliveryRequest is already paid
+        if delivery_request.status.lower() == "paid":
+            raise ValueError("This delivery request has already been paid")
+
         customer_id = delivery_request.customer_id
 
         # Retrieve the Quotation price for the delivery_request_id

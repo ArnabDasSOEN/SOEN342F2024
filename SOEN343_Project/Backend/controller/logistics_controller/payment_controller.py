@@ -11,11 +11,17 @@ def make_payment():
     delivery_request_id = data.get('delivery_request_id')
     payment_method = data.get('payment_method')
 
-    payment_facade = current_app.config['payment_facade']
-    success = payment_facade.process_payment_and_create_order(
-        delivery_request_id, payment_method)
+    try:
+        payment_facade = current_app.config['payment_facade']
+        success = payment_facade.process_payment_and_create_order(
+            delivery_request_id, payment_method)
 
-    if success:
-        return jsonify({"status": "Payment successful and order processed"}), 200
-    else:
-        return jsonify({"status": "Payment processing failed"}), 400
+        if success:
+            return jsonify({"status": "Payment successful and order processed"}), 200
+    except ValueError as e:
+        # Handle known errors like "already paid"
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        # Handle unexpected errors
+        return jsonify({"error": "Payment processing failed"}), 500
+

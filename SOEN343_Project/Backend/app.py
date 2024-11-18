@@ -1,10 +1,13 @@
+# app.py
 import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
+from extensions import limiter  # Import limiter from extensions
 from dbconnection import db
 from blueprints import register_blueprints
 from config import Config, TestConfig
+from dotenv import load_dotenv
 
 # Import facades and services
 from facades.delivery_request_facade import DeliveryRequestFacade
@@ -12,10 +15,12 @@ from facades.order_facade import OrderFacade
 from facades.payment_facade import PaymentFacade
 from services.event_dispatcher import EventDispatcher
 from services.quotation_service import QuotationService
-from dotenv import load_dotenv
+
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
+
+# Configure Flask app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -24,6 +29,9 @@ if os.getenv('FLASK_ENV') == 'testing':
     app.config.from_object(TestConfig)
 else:
     app.config.from_object(Config)
+
+# Initialize Flask-Limiter with the app
+limiter.init_app(app)
 
 # Initialize database and migration
 db.init_app(app)
@@ -55,7 +63,6 @@ with app.app_context():
     # Store facades in app config
     app.config['payment_facade'] = payment_facade
     app.config['order_facade'] = order_facade
-    # Add this line
     app.config['delivery_request_facade'] = delivery_request_facade
 
 # Register blueprints for routing
@@ -65,7 +72,6 @@ register_blueprints(app)
 @app.route('/')
 def home():
     return "OOGA BOOGA"
-
 
 # Run the app
 if __name__ == '__main__':

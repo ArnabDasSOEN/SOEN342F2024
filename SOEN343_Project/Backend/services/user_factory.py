@@ -9,6 +9,8 @@ class UserFactory:
     @staticmethod
     def create_user(user_type, name, password, email, phone_number, admin_id=None):
         if user_type.lower() == "admin":
+            if not admin_id:
+                raise ValueError("Admin creation requires an admin_id.")
             user = Admin(name, password, email, phone_number, admin_id)
         elif user_type.lower() == "customer":
             user = Customer(name, password, email, phone_number)
