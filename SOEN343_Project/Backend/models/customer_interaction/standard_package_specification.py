@@ -16,8 +16,10 @@ class StandardPackageSpecification(db.Model):
         self.height = height
         self.weight = weight
 
-    def get_weight(self):
+    def get_weight(self) -> float:
+        """Retrieve the base weight of the package."""
         return self.weight
 
-    def get_dimensions(self):
+    def get_dimensions(self) -> list:
+        """Retrieve the dimensions of the package as a list."""
         return [self.width, self.length, self.height]

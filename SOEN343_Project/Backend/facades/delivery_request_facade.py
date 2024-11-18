@@ -1,8 +1,6 @@
-
 from models.logistics.delivery_request import DeliveryRequest
 from services.address_service import AddressService
 from services.package_factory import PackageFactory
-from services.distance_service import DistanceService
 from services.quotation_service import QuotationService
 from dbconnection import db
 
@@ -28,10 +26,12 @@ class DeliveryRequestFacade:
         db.session.add(delivery_request)
         db.session.commit()
 
-        # Step 4: Calculate distance and get quotation price
-        distance = DistanceService.calculate(pick_up_address, drop_off_address)
+        # Step 4: Calculate quotation price using QuotationService
         quotation_price = QuotationService.calculate_quotation(
-            delivery_request.id, distance)
+            delivery_request_id=delivery_request.id,
+            pick_up_address=pick_up_address,
+            drop_off_address=drop_off_address
+        )
 
         return {
             "delivery_request_id": delivery_request.id,

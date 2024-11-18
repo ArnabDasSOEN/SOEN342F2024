@@ -1,6 +1,4 @@
-# Models/Logistics/Package.py
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declared_attr
 from dbconnection import db
 
 
@@ -9,6 +7,7 @@ class Package(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     package_specification_id = db.Column(
         db.Integer, db.ForeignKey('standard_package_specifications.id'))
+    package_specification = db.relationship('StandardPackageSpecification')
 
     # Relationship to PackageItems
     items = db.relationship('PackageItem', backref='package',
@@ -23,7 +22,33 @@ class Package(db.Model):
 
     @property
     def is_fragile(self) -> bool:
+        """Default fragility property."""
         return False
+
+    def calculate_volumetric_weight(self) -> float:
+        """
+        Calculate the volumetric weight based on dimensions (cm).
+        Formula: (L * W * H) / 5000
+        """
+        dimensions = self.package_specification.get_dimensions()
+        length, width, height = dimensions
+        return (length * width * height) / 5000
+
+    def calculate_total_weight(self) -> float:
+        """
+        Calculate the total weight, including package items.
+        """
+        spec_weight = self.package_specification.get_weight()
+        items_weight = sum(item.weight * item.quantity for item in self.items)
+        return spec_weight + items_weight
+
+    def calculate_shipping_weight(self) -> float:
+        """
+        Determine the shipping weight as the maximum of volumetric or total weight.
+        """
+        volumetric_weight = self.calculate_volumetric_weight()
+        total_weight = self.calculate_total_weight()
+        return max(volumetric_weight, total_weight)
 
 
 class FragilePackage(Package):
@@ -37,4 +62,5 @@ class FragilePackage(Package):
 
     @property
     def is_fragile(self) -> bool:
+        """Override fragility property."""
         return True

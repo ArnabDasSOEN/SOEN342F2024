@@ -12,7 +12,8 @@ from facades.order_facade import OrderFacade
 from facades.payment_facade import PaymentFacade
 from services.event_dispatcher import EventDispatcher
 from services.quotation_service import QuotationService
-
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
