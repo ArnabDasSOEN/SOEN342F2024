@@ -38,7 +38,7 @@ export const Login = () => {
       localStorage.setItem("user_id", response.data.user_id);
       //console.log("logged user is: ", localStorage.getItem("username"));
 
-      navigate("/dashboard"); // Redirect to a dashboard or home page on success
+      navigate("/userHomePage"); // Redirect to a dashboard or home page on success
     } catch (err) {
       setError(err.response?.data?.error || "An error occurred during login.");
     }
