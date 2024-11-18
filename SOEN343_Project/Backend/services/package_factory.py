@@ -17,18 +17,18 @@ class PackageFactory:
         # Use appropriate adapter based on unit system
         if unit_system == "imperial":
             imperial_spec = ImperialPackageSpecification(
-                width_in=package_data["width_in"],
-                length_in=package_data["length_in"],
-                height_in=package_data["height_in"],
-                weight_lb=package_data["weight_lb"]
+                width_in=package_data["width"],
+                length_in=package_data["length"],
+                height_in=package_data["height"],
+                weight_lb=package_data["weight"]
             )
             package_spec = ImperialPackageAdapter(imperial_spec).standard_spec
         else:
             metric_spec = MetricPackageSpecification(
-                width_cm=package_data["width_cm"],
-                length_cm=package_data["length_cm"],
-                height_cm=package_data["height_cm"],
-                weight_kg=package_data["weight_kg"]
+                width_cm=package_data["width"],
+                length_cm=package_data["length"],
+                height_cm=package_data["height"],
+                weight_kg=package_data["weight"]
             )
             package_spec = MetricPackageAdapter(metric_spec).standard_spec
 
