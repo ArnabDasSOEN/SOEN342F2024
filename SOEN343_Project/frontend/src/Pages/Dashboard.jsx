@@ -182,18 +182,12 @@ export const Dashboard = () => {
 
         console.log("DATA: carlo cheeks: ", deliveryDataObj)
             try{
-            var reponse = await axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj,
-                {
-                    headers: {'content-Type':'application/json'},
+                var reponse = await axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj);
+                }catch (e){
+                    console.log("Error delivery request", e);
                 }
-            );
-            }catch (e){
-                console.log("Error delivery request", e);
-            }
-   
-
                 console.log(reponse);
-    }//end of form submission.
+            }
 
     return (
         <main className="dashboard">
