@@ -1,6 +1,6 @@
 from square.client import Client
 import os
-
+import uuid
 
 class PaymentService:
     @staticmethod
@@ -25,10 +25,13 @@ class PaymentService:
             environment="sandbox"  # Change to "production" for live transactions
         )
 
+        # Generate a unique idempotency key (max 45 chars)
+        idempotency_key = f"del-{delivery_request_id}-{uuid.uuid4().hex[:10]}"
+
         # Create the payment request body
         body = {
             "source_id": payment_method,  # Payment token from the frontend
-            "idempotency_key": f"delivery-{delivery_request_id}",  # Unique key
+            "idempotency_key": idempotency_key,  # Unique key
             "amount_money": {
                 "amount": int(amount * 100),  # Convert dollars to cents
                 "currency": "CAD"

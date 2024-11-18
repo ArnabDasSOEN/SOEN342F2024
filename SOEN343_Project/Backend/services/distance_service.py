@@ -43,3 +43,36 @@ class DistanceService:
                 raise Exception(f"Google Maps API error: {error_message}")
         except Exception as e:
             raise Exception(f"Error calculating distance: {e}")
+        
+
+    @staticmethod
+    def calculate_route_time(origin_address, destination_address):
+        """
+        Calculate the route time between two addresses using Google Maps Distance Matrix API.
+
+        :param origin_address: The origin address as a string.
+        :param destination_address: The destination address as a string.
+        :return: Estimated travel time in minutes.
+        """
+        api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+        if not api_key:
+            raise ValueError("Google Maps API key is not set in environment variables.")
+
+        url = "https://maps.googleapis.com/maps/api/distancematrix/json"
+        params = {
+            "origins": origin_address,
+            "destinations": destination_address,
+            "key": api_key,
+            "mode": "driving"
+        }
+
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            if data["rows"][0]["elements"][0]["status"] == "OK":
+                travel_time_seconds = data["rows"][0]["elements"][0]["duration"]["value"]
+                return travel_time_seconds / 60  # Convert seconds to minutes
+            else:
+                raise ValueError(f"Error fetching travel time: {data['rows'][0]['elements'][0]['status']}")
+        else:
+            raise ValueError(f"Google Maps API request failed with status: {response.status_code}")
