@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import './CSS/Dashboard.css'
 
+
 export const Dashboard = () => {
 
     //how the data should look
@@ -26,20 +27,20 @@ export const Dashboard = () => {
     // "package": {
     //     "unit_system": "imperial",
     //     "width_in_in": 10,
-    //     "length_in": 20,
-    //     "height_in": 5,
-    //     "weight_lb": 30,
+    //     "length": 20,
+    //     "height": 5,
+    //     "weight": 30,
     //     "is_fragile": true,
     //     "package_items": [
     //         {
     //             "item_description": "Glass Vase",
     //             "quantity": 2,
-    //             "weight_lb": 1.5
+    //             "weight": 1.5
     //         },
     //         {
     //             "item_description": "Fragile Sculpture",
     //             "quantity": 1,
-    //             "weight_lb": 2.0
+    //             "weight": 2.0
     //         }
     //     ]
     // },
@@ -58,7 +59,7 @@ export const Dashboard = () => {
     }
 
 
-    const [packageItemArray, setPackageItemArray] = useState([])
+    const [packageItemArray, setPackageItemArray] = useState([]);
     const handleAddPackageItem = () => {
         setPackageItemArray( (currItems) => ([...currItems, packageItem]));
         setPackageItem({
@@ -105,10 +106,10 @@ export const Dashboard = () => {
     }
     const [packageInfo, setPackageInfo] = useState({
         unit_system: selectedUnit,
-        length_in: "",
-        width_in: "",
-        height_in: "",
-        weight_lb: "",
+        length: 0,
+        width: 0,
+        height: 0,
+        weight: 0,
         is_fragile: false,
         package_items: []
     });
@@ -123,7 +124,7 @@ export const Dashboard = () => {
         setPackageItem({
             item_description: "",
             quantity: 0,
-            weight_lb: 0
+            weight: 0
         })
 
         setPackageItemArray([])
@@ -150,42 +151,48 @@ export const Dashboard = () => {
 
         setPackageInfo({
             unit_system: selectedUnit,
-            length_in: "",
-            width_in: "",
-            height_in: "",
-            weight_lb: "",
+            length: "",
+            width: "",
+            height: "",
+            weight: "",
             is_fragile: false,
             package_items: packageItemArray
         })
     }
 
 
-    const handleSubmitForm = (e) => {
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
        
-         const customerId = localStorage.getItem("user_id");
-        // customerId = {customerId};
-
-        //package_items
+        const customerId = localStorage.getItem("user_id");
         const packageInfoObj = {...packageInfo, package_items: packageItemArray }
+        
+
+
 
         const deliveryDataObj = {
-            //customer_id: {customerId},
-            customer_id: customerId,
+            customer_id: parseInt(customerId),
             pick_up_address: pickUpAddress,
             drop_off_address: dropOffAddress,
             //package: packageInfo
-            package: packageInfoObj
+            package: packageInfoObj,
+            //package:null
         }
-        console.log(deliveryDataObj)
 
-            axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj)
-                .then( (response) => {
-                    console.log("response: ", response);
-                    resetAllInputs();
-                }).catch( e => {
-                    console.log("error making delivery request", e);
-                })
+
+        console.log("DATA: carlo cheeks: ", deliveryDataObj)
+            try{
+            var reponse = await axios.post("http://localhost:5000/create_delivery_request", deliveryDataObj,
+                {
+                    headers: {'content-Type':'application/json'},
+                }
+            );
+            }catch (e){
+                console.log("Error delivery request", e);
+            }
+   
+
+                console.log(reponse);
     }//end of form submission.
 
     return (
@@ -257,19 +264,19 @@ export const Dashboard = () => {
                 </div>
                 <label>
                     length:
-                    <input type="number" name="length_in" value={packageInfo.length_in} onChange={handlePackageChange}></input>
+                    <input type="number" name="length" value={packageInfo.length} onChange={handlePackageChange}></input>
                 </label>
                 <label>
                     width:
-                    <input type="number" name="width_in" value={packageInfo.width_in} onChange={handlePackageChange}></input>
+                    <input type="number" name="width" value={packageInfo.width} onChange={handlePackageChange}></input>
                 </label>
                 <label>
                     height:
-                    <input type="number" name="height_in" value={packageInfo.height_in} onChange={handlePackageChange}></input>
+                    <input type="number" name="height" value={packageInfo.height} onChange={handlePackageChange}></input>
                 </label>
                 <label>
                     weight:
-                    <input type="number" name="weight_lb" value={packageInfo.weight_lb} onChange={handlePackageChange}></input>
+                    <input type="number" name="weight" value={packageInfo.weight} onChange={handlePackageChange}></input>
                 </label>
                 <h3>Is this item fragile?</h3>
                 <div className="fragile-option">
