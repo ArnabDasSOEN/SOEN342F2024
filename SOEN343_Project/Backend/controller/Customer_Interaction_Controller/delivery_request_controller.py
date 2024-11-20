@@ -2,10 +2,9 @@ from flask import Blueprint, request, jsonify, current_app
 from models.logistics.delivery_request import DeliveryRequest
 from dbconnection import db
 
-delivery_request_blueprint = Blueprint(
-    'delivery_request', __name__, url_prefix='/delivery_request')
+delivery_request_blueprint = Blueprint('delivery_request', __name__, url_prefix='/delivery_request')
 
-
+#create a delivery request
 @delivery_request_blueprint.route('/create_delivery_request', methods=['POST'])
 def create_delivery_request():
     data = request.json
@@ -37,7 +36,7 @@ def create_delivery_request():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+#Cancel a delivery request
 @delivery_request_blueprint.route('/cancel_delivery_request', methods=['POST'])
 def cancel_delivery_request():
     data = request.json
@@ -64,7 +63,7 @@ def cancel_delivery_request():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+#View current delivery requests
 @delivery_request_blueprint.route('/view_delivery_requests', methods=['POST'])
 def view_delivery_requests():
     data = request.json
@@ -103,7 +102,7 @@ def view_delivery_requests():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+#Update a delivery request
 @delivery_request_blueprint.route('/update_delivery_request', methods=['POST'])
 def update_delivery_request():
     data = request.json

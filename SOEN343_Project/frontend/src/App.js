@@ -12,10 +12,14 @@ import { UserHomePage } from './Pages/UserHomePage.jsx';
 import { ViewOrders } from './Pages/ViewOrders.jsx';
 import { ViewDeliveryRequest } from "./Pages/ViewDeliveryRequest.jsx"
 import { TrackOrders } from './Pages/TrackOrders.jsx';
-import { CancelDeliveryRequest } from './Pages/CancelDeliveryRequest.jsx';
+//import { CancelDeliveryRequest } from './Pages/CancelDeliveryRequest.jsx';
 import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
 
 function App() {
+
+  //const [user_id, setUserId] = useState(localStorage.getItem("user_id"))
+
+
   return (
     <div className='App'>
       <BrowserRouter>
@@ -31,7 +35,7 @@ function App() {
           <Route path='/viewOrders' element={<ViewOrders/>}/>
           <Route path='/viewDeliveryRequest' element={<ViewDeliveryRequest/>}/>
           <Route path='/trackOrders' element={<TrackOrders/>}/>
-          <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/>
+          {/* <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/> */}
           <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/>
 
         </Routes>

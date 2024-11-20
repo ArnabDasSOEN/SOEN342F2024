@@ -8,6 +8,8 @@ from dbconnection import db
 from blueprints import register_blueprints
 from config import Config, TestConfig
 from dotenv import load_dotenv
+#from blueprints import delivery_request_blueprint
+
 
 # Import facades and services
 from facades.delivery_request_facade import DeliveryRequestFacade
@@ -19,6 +21,7 @@ from services.quotation_service import QuotationService
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
+
 
 # Configure Flask app
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
