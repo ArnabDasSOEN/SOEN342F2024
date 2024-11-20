@@ -1,8 +1,9 @@
-#controller/logistics_controller/order_controller.py
+# controller/logistics_controller/order_controller.py
 from flask import Blueprint, request, jsonify, current_app
 from models.logistics.order import Order
 
 order_blueprint = Blueprint('order', __name__)
+
 
 @order_blueprint.route('/get_orders_by_user', methods=['POST'])
 def get_orders_by_user():

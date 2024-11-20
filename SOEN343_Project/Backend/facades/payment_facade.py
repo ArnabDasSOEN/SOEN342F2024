@@ -71,3 +71,38 @@ class PaymentFacade:
             })
 
         return payment_success
+
+    def get_payment_history(self, user_id):
+        """
+        Retrieve payment history for a specific customer.
+        """
+        payments = db.session.query(Payment).filter_by(
+            customer_id=user_id).all()
+        if not payments:
+            return []
+        return [
+            {
+                "payment_id": payment.id,
+                "order_id": payment.order_id,
+                "amount": payment.amount,
+                "payment_date": payment.payment_date.isoformat(),
+                "status": payment.status
+            }
+            for payment in payments
+        ]
+
+    def get_payment_status_by_order(self, order_id):
+        """
+        Retrieve the status of a specific payment.
+        """
+        payment = db.session.query(Payment).filter_by(
+            order_id=order_id).first()
+        if not payment:
+            return None
+        return {
+            "payment_id": payment.id,
+            "order_id": payment.order_id,
+            "amount": payment.amount,
+            "payment_date": payment.payment_date.isoformat(),
+            "status": payment.status
+        }
