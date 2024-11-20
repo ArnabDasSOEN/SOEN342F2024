@@ -50,6 +50,7 @@ export const Dashboard = () => {
 
   // Google Places Autocomplete Handlers
   const onLoadPickup = (autocomplete) => setAutocompletePickup(autocomplete);
+
   const onPlaceChangedPickup = () => {
     if (autocompletePickup) {
       const place = autocompletePickup.getPlace();
@@ -197,10 +198,7 @@ export const Dashboard = () => {
       >
         <form onSubmit={handleSubmitForm}>
           <h3>Pick Up Location</h3>
-          <Autocomplete
-            onLoad={onLoadPickup}
-            onPlaceChanged={onPlaceChangedPickup}
-          >
+          <Autocomplete onLoad={onLoadPickup} onPlaceChanged={onPlaceChangedPickup}>
             <input
               type="text"
               name="street"
@@ -212,18 +210,8 @@ export const Dashboard = () => {
           </Autocomplete>
 
           <h3>Drop Off Location</h3>
-          <Autocomplete
-            onLoad={onLoadDropoff}
-            onPlaceChanged={onPlaceChangedDropoff}
-          >
-            <input
-              type="text"
-              name="street"
-              className="location-input"
-              placeholder="Enter drop-off address"
-              value={dropOffAddress.street}
-              onChange={handleDropOffAddressChange}
-            />
+          <Autocomplete onLoad={onLoadDropoff} onPlaceChanged={onPlaceChangedDropoff}>
+            <input type="text" name="street" className="location-input" placeholder="Enter drop-off address" value={dropOffAddress.street} onChange={handleDropOffAddressChange} />
           </Autocomplete>
 
           <h3>Package Information</h3>
