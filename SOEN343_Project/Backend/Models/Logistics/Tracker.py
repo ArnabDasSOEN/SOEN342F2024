@@ -22,14 +22,18 @@ class Tracker(db.Model):
     __tablename__ = 'trackers'
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
-    delivery_agent_id = db.Column(db.Integer, db.ForeignKey('delivery_agents.id'), nullable=False)
-    status = db.Column(db.String(50), nullable=False, default=DeliveryStatus.IN_TRANSIT.value)
+    order_id = db.Column(db.Integer, db.ForeignKey(
+        'orders.id'), nullable=False)
+    delivery_agent_id = db.Column(db.Integer, db.ForeignKey(
+        'delivery_agents.id'), nullable=False)
+    status = db.Column(db.String(50), nullable=False,
+                       default=DeliveryStatus.IN_TRANSIT.value)
     estimated_delivery_time = db.Column(db.Float, nullable=True)  # In minutes
 
     # Relationships
     order = db.relationship("Order", backref="tracker")
-    delivery_agent = db.relationship("DeliveryAgent", back_populates="trackers")
+    delivery_agent = db.relationship(
+        "DeliveryAgent", back_populates="trackers")
 
     def update_status(self, new_status, delivery_time=None):
         """

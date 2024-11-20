@@ -9,6 +9,9 @@ flask-migrate = "*"
 faker = "*"
 openai = "*"
 flask-limiter = "*"
+requests = "*"
+python-dotenv = "*"
+squareup = "*"
 
 [dev-packages]
 

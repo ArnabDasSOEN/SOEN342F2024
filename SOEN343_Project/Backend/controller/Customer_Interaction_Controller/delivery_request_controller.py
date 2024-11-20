@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify, current_app
 from models.logistics.delivery_request import DeliveryRequest
 from dbconnection import db
 
-delivery_request_blueprint = Blueprint('delivery_request', __name__)
+delivery_request_blueprint = Blueprint(
+    'delivery_request', __name__, url_prefix='/delivery_request')
 
 
 @delivery_request_blueprint.route('/create_delivery_request', methods=['POST'])
@@ -37,7 +38,6 @@ def create_delivery_request():
         return jsonify({"error": str(e)}), 500
 
 
-
 @delivery_request_blueprint.route('/cancel_delivery_request', methods=['POST'])
 def cancel_delivery_request():
     data = request.json
@@ -64,6 +64,7 @@ def cancel_delivery_request():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @delivery_request_blueprint.route('/view_delivery_requests', methods=['POST'])
 def view_delivery_requests():
     data = request.json
@@ -74,7 +75,8 @@ def view_delivery_requests():
         return jsonify({"error": "Invalid or missing user_id"}), 400
 
     try:
-        delivery_requests = DeliveryRequest.query.filter_by(customer_id=user_id).all()
+        delivery_requests = DeliveryRequest.query.filter_by(
+            customer_id=user_id).all()
         if not delivery_requests:
             return jsonify({"message": f"No delivery requests found for user_id {user_id}"}), 404
 
@@ -101,3 +103,42 @@ def view_delivery_requests():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@delivery_request_blueprint.route('/update_delivery_request', methods=['POST'])
+def update_delivery_request():
+    data = request.json
+
+    # Input validation
+    delivery_request_id = data.get("delivery_request_id")
+    if not delivery_request_id or not isinstance(delivery_request_id, int):
+        return jsonify({"error": "Invalid or missing delivery_request_id"}), 400
+
+    pick_up_address_data = data.get("pick_up_address")
+    if pick_up_address_data and not isinstance(pick_up_address_data, dict):
+        return jsonify({"error": "Invalid pick_up_address data"}), 400
+
+    drop_off_address_data = data.get("drop_off_address")
+    if drop_off_address_data and not isinstance(drop_off_address_data, dict):
+        return jsonify({"error": "Invalid drop_off_address data"}), 400
+
+    package_data = data.get("package")
+    if package_data and not isinstance(package_data, dict):
+        return jsonify({"error": "Invalid package data"}), 400
+
+    # Ensure at least one field is being updated
+    if not (pick_up_address_data or drop_off_address_data or package_data):
+        return jsonify({"error": "No update data provided"}), 400
+
+    try:
+        facade = current_app.config['delivery_request_facade']
+        result = facade.update_delivery_request(
+            delivery_request_id=delivery_request_id,
+            pick_up_address_data=pick_up_address_data,
+            drop_off_address_data=drop_off_address_data,
+            package_data=package_data
+        )
+        return jsonify(result), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
