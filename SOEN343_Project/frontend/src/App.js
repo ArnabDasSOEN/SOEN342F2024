@@ -9,6 +9,11 @@ import { Chatbot } from './Components/Chatbot/Chatbot';
 import { Dashboard } from "./Pages/Dashboard.jsx";
 import { Logout } from "./Pages/Logout";
 import { UserHomePage } from './Pages/UserHomePage.jsx';
+import { ViewOrders } from './Pages/ViewOrders.jsx';
+import { ViewDeliveryRequest } from "./Pages/ViewDeliveryRequest.jsx"
+import { TrackOrders } from './Pages/TrackOrders.jsx';
+import { CancelDeliveryRequest } from './Pages/CancelDeliveryRequest.jsx';
+import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
 
 function App() {
   return (
@@ -22,6 +27,13 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/logout' element={<Logout/>}/>
           <Route path='/userHomePage' element={<UserHomePage/>}/>
+
+          <Route path='/viewOrders' element={<ViewOrders/>}/>
+          <Route path='/viewDeliveryRequest' element={<ViewDeliveryRequest/>}/>
+          <Route path='/trackOrders' element={<TrackOrders/>}/>
+          <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/>
+          <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/>
+
         </Routes>
         <Chatbot/>
         <Footer/>
