@@ -204,6 +204,7 @@ export const Dashboard = () => {
             <input
               type="text"
               name="street"
+              className="location-input"
               placeholder="Enter pickup address"
               value={pickUpAddress.street}
               onChange={handlePickUpAddressChange}
@@ -218,6 +219,7 @@ export const Dashboard = () => {
             <input
               type="text"
               name="street"
+              className="location-input"
               placeholder="Enter drop-off address"
               value={dropOffAddress.street}
               onChange={handleDropOffAddressChange}
@@ -294,11 +296,12 @@ export const Dashboard = () => {
               onChange={handlePackageItemChange}
             />
           </label>
-          <button type="button" onClick={handleAddPackageItem}>
-            Add Package Item
-          </button>
-
-          <button type="submit">Submit Delivery Request</button>
+          <div className="button-container">
+            <button type="button" onClick={handleAddPackageItem}>
+              Add Package Item
+            </button>
+            <button type="submit">Submit Delivery Request</button>
+          </div>
         </form>
       </LoadScript>
     </main>
