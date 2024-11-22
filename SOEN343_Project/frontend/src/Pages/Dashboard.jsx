@@ -110,7 +110,7 @@ export const Dashboard = () => {
   const onPlaceChangedPickup = () => {
     if (autocompletePickup) {
       const place = autocompletePickup.getPlace();
-      console.log(autocompletePickup.getPlace())
+      //console.log(autocompletePickup.getPlace())
       if (place && place.address_components) {
         const address = formatAddressComponents(place.address_components);
         setPickUpAddress((prev) => ({ ...prev, ...address }));
@@ -123,7 +123,7 @@ export const Dashboard = () => {
   const onPlaceChangedDropoff = () => {
     if (autocompleteDropoff) {
       const place = autocompleteDropoff.getPlace();
-      console.log(place);
+      //console.log(place);
       if (place && place.address_components) {
         const address = formatAddressComponents(place.address_components);
         setDropOffAddress((prev) => ({ ...prev, ...address }))

@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from models.logistics.delivery_request import DeliveryRequest
 from dbconnection import db
 
+
 delivery_request_blueprint = Blueprint('delivery_request', __name__, url_prefix='/delivery_request')
 
 #create a delivery request

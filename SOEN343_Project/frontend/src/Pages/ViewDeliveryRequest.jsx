@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { DeliveryRequest } from "../Components/DeliveryRequests";
 
 export const ViewDeliveryRequest = () => {
 
+    const [requests, setRequests] = useState([]);
     useEffect(() => {
         //  /delivery_request/view_delivery_requests
         async function ViewDeliveries(){
@@ -11,14 +13,20 @@ export const ViewDeliveryRequest = () => {
                 const data = {user_id}
                 //console.log(data);
                 const response = await axios.post("http://localhost:5000/delivery_request/view_delivery_requests", data )
-                console.log(response);
+                console.log(response.data);
+
+
+                setRequests(response.data.map( item => {
+                    return <DeliveryRequest id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
+
+                }))
+
+
             }catch (err){
                 console.log("Got an error viewing requests", err)
             }
         }
         ViewDeliveries();
-
-
       }, []); //empty dependency implies tha tthe compoenent only rnders after initial rerender. aka, each time user clicks view deliveries, this will trigger a request and no more.
     
 
@@ -30,6 +38,7 @@ export const ViewDeliveryRequest = () => {
         <main>
             <h1>Pending delivery Request</h1>
             <h2>Implement cancel as well from this</h2>
+            {requests}
         </main>
     );
 }
