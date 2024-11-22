@@ -72,9 +72,9 @@ with app.app_context():
 register_blueprints(app)
 
 # Define a home route
-@app.route('/')
-def home():
-    return "OOGA BOOGA"
+#@app.route('/')
+#def home():
+#    return "OOGA BOOGA"
 
 # Run the app
 if __name__ == '__main__':

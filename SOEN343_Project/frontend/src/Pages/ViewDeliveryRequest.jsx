@@ -9,7 +9,7 @@ export const ViewDeliveryRequest = () => {
             try{
                 const user_id = parseInt(localStorage.getItem("user_id"))
                 const data = {user_id}
-                console.log(data);
+                //console.log(data);
                 const response = await axios.post("http://localhost:5000/delivery_request/view_delivery_requests", data )
                 console.log(response);
             }catch (err){
