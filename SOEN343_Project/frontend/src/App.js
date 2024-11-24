@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Navbar } from './Components/Navbar/Navbar';
@@ -6,7 +8,7 @@ import { Login } from './Pages/Login';
 import { Footer } from './Components/Footer/Footer';
 import { SignUp } from './Pages/SignUp';
 import { Chatbot } from './Components/Chatbot/Chatbot';
-import { Dashboard } from "./Pages/Dashboard.jsx";
+import { Dashboard } from "./Pages/RequestDelivery.jsx";
 import { Logout } from "./Pages/Logout";
 import { UserHomePage } from './Pages/UserHomePage.jsx';
 import { ViewOrders } from './Pages/ViewOrders.jsx';
@@ -17,16 +19,18 @@ import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
 
 function App() {
 
-  //const [user_id, setUserId] = useState(localStorage.getItem("user_id"))
-
+  const [user_id, setUserId] = useState(localStorage.getItem("user_id"))
+  
 
   return (
     <div className='App'>
       <BrowserRouter>
-        <Navbar/>
+        <Navbar user_id={user_id} setUserId={setUserId}/>
+
+
         <Routes>
           <Route path='/' element={<Landing/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/login' element={<Login setUserId={setUserId} />}/>
           <Route path='/signup' element={<SignUp/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/logout' element={<Logout/>}/>

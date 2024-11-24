@@ -8,7 +8,7 @@ import twitter_logo from "../Components/Assets/TwitterX.png";
 import apple_logo from "../Components/Assets/Apple Logo.png";
 import amazon_logo from "../Components/Assets/Amazon.png";
 
-export const Login = () => {
+export const Login = ( {setUserId}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,7 +37,7 @@ export const Login = () => {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("user_id", response.data.user_id);
       //console.log("logged user is: ", localStorage.getItem("username"));
-
+      setUserId(localStorage.getItem("user_id"))
       navigate("/userHomePage"); // Redirect to a dashboard or home page on success
     } catch (err) {
       setError(err.response?.data?.error || "An error occurred during login.");
