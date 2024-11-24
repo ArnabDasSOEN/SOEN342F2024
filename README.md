@@ -20,10 +20,10 @@ The purpose of this project is to create a user-friendly delivery service applic
 |40251021|Mahad Khattak|MahadKhattak|
 
 ## Languages
-- React.js
-- Flask
-- MongoDB
+- React.js (JavaScript)
+- Flask (Python)
 - HTML
 - CSS
-- JavaScript
-- Python
+- Google API for locations
+- square SDK for payment management
+- SQLAlchemy
