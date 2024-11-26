@@ -1,23 +1,17 @@
-# tests/conftest.py
 import pytest
-from app import app, db
+from app import create_app
+from dbconnection import db
 
 
 @pytest.fixture
 def client():
-    # Configure the app for testing
-    app.config['TESTING'] = True
-    # Use in-memory database for faster tests
+    app = create_app(testing=True)  # Adjust to your app creation method
+    # In-memory test DB
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-
-    # Set up the database
-    with app.app_context():
-        db.create_all()
-
-    # Create a test client
     with app.test_client() as client:
+        with app.app_context():
+            db.create_all()
         yield client
-
-    # Clean up the database
-    with app.app_context():
-        db.drop_all()
+        with app.app_context():
+            db.session.remove()
+            db.drop_all()

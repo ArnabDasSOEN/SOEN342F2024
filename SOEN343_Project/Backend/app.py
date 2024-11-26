@@ -1,4 +1,3 @@
-# app.py
 import os
 from flask import Flask
 from flask_migrate import Migrate
@@ -8,8 +7,6 @@ from dbconnection import db
 from blueprints import register_blueprints
 from config import Config, TestConfig
 from dotenv import load_dotenv
-#from blueprints import delivery_request_blueprint
-
 
 # Import facades and services
 from facades.delivery_request_facade import DeliveryRequestFacade
@@ -18,64 +15,54 @@ from facades.payment_facade import PaymentFacade
 from services.event_dispatcher import EventDispatcher
 from services.quotation_service import QuotationService
 
-load_dotenv()
-app = Flask(__name__)
-CORS(app)
+
+def create_app(testing=False):
+    load_dotenv()  # Load environment variables from .env
+    # Enable instance-relative config
+    app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
+
+    # Load configuration
+    if testing:
+        app.config.from_object(TestConfig)
+    else:
+        app.config.from_object(Config)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+    # Initialize extensions
+    limiter.init_app(app)
+    db.init_app(app)
+    Migrate(app, db)
+
+    # Register blueprints
+    register_blueprints(app)
+
+    with app.app_context():
+        print("Resolved Database URI:", app.config['SQLALCHEMY_DATABASE_URI'])
+
+        db.create_all()
+
+        # Initialize services and facades
+        event_dispatcher = EventDispatcher()
+        quotation_service = QuotationService()
+        payment_facade = PaymentFacade(event_dispatcher)
+        order_facade = OrderFacade()
+        delivery_request_facade = DeliveryRequestFacade()
+
+        def handle_payment_successful(event_data):
+            order_facade.finalize_order(event_data["order_id"])
+
+        event_dispatcher.add_listener(
+            "payment_successful", handle_payment_successful)
+
+        # Store facades in app config
+        app.config['payment_facade'] = payment_facade
+        app.config['order_facade'] = order_facade
+        app.config['delivery_request_facade'] = delivery_request_facade
+
+    return app
 
 
-# Configure Flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Load different configurations for testing or production
-if os.getenv('FLASK_ENV') == 'testing':
-    app.config.from_object(TestConfig)
-else:
-    app.config.from_object(Config)
-
-# Initialize Flask-Limiter with the app
-limiter.init_app(app)
-
-# Initialize database and migration
-db.init_app(app)
-migrate = Migrate(app, db)
-
-# Ensure tables are created within the application context
-with app.app_context():
-    db.create_all()
-
-    # Initialize event dispatcher
-    event_dispatcher = EventDispatcher()
-
-    # Initialize services
-    quotation_service = QuotationService()
-
-    # Initialize facades
-    payment_facade = PaymentFacade(event_dispatcher)
-    order_facade = OrderFacade()
-    delivery_request_facade = DeliveryRequestFacade()
-
-    # Add the event listener for order creation
-    def handle_payment_successful(event_data):
-        order_facade.finalize_order(event_data["order_id"])
-
-    event_dispatcher.add_listener(
-        "payment_successful", handle_payment_successful
-    )
-
-    # Store facades in app config
-    app.config['payment_facade'] = payment_facade
-    app.config['order_facade'] = order_facade
-    app.config['delivery_request_facade'] = delivery_request_facade
-
-# Register blueprints for routing
-register_blueprints(app)
-
-# Define a home route
-#@app.route('/')
-#def home():
-#    return "OOGA BOOGA"
-
-# Run the app
 if __name__ == '__main__':
+    app = create_app()
     app.run(debug=True)

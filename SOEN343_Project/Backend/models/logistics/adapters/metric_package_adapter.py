@@ -3,8 +3,8 @@ This module provides the MetricPackageAdapter class, which adapts metric package
 specifications to the standard package specification interface.
 """
 
-from ..customer_interaction.standard_package_specification import StandardPackageSpecification
-from ..customer_interaction.package_specification_interface import PackageSpecificationInterface
+from models.customer_interaction.standard_package_specification import StandardPackageSpecification
+from models.customer_interaction.package_specification_interface import PackageSpecificationInterface
 
 
 class MetricPackageAdapter(PackageSpecificationInterface):

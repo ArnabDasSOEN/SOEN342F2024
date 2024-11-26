@@ -32,13 +32,13 @@ class NotificationFactory:
         """
         if notification_type == "email":
             notification = EmailNotification(
-                contact_info=contact_info,
+                email=contact_info,
                 message_content=message_content,
                 order_id=order_id
             )
         elif notification_type == "sms":
             notification = SMSNotification(
-                contact_info=contact_info,
+                phone_number=contact_info,
                 message_content=message_content,
                 order_id=order_id
             )

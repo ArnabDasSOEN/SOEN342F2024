@@ -43,7 +43,7 @@ def update_status():
 
     if status_enum == DeliveryStatus.OUT_FOR_DELIVERY:
         # Start the simulation
-        start_simulation(current_app, tracker_id)
+        start_simulation(tracker_id)
 
     tracker.update_status(status_enum)
     return jsonify({"status": f"Tracker status updated to {new_status}"}), 200

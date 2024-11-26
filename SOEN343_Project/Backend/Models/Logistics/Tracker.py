@@ -58,6 +58,9 @@ class Tracker(db.Model):
             self.estimated_delivery_time = delivery_time
         db.session.commit()
 
+        print(f"Tracker {self.id} status updated to {
+              self.status}, estimated delivery time: {self.estimated_delivery_time}")
+
         # Update associated order's status
         order_status = ORDER_STATUS_MAPPING.get(new_status)
         if order_status and self.order:
