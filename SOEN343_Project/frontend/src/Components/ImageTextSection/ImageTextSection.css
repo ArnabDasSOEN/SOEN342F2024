@@ -1,0 +1,56 @@
+.image-text-section {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-top: 100px;
+    margin-bottom: 100px;
+    font-family: 'Avenir';
+  }
+  
+  .image-container img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px; 
+    object-fit: cover; 
+  }
+  
+  .text-container {
+    flex: 1;
+    margin-left: 20px;
+    text-align: left;
+    color: #333;
+  }
+  
+  .text-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .text-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: #555;
+  }
+  
+  .action-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #163760;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    background-color: #2a6ab8;
+  }
+  
+  
