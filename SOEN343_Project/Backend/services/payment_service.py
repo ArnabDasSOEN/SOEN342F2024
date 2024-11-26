@@ -15,7 +15,7 @@ class PaymentService:
         """
         # Get the Squareup access token from environment variables
         squareup_access_token = os.getenv("SQUAREUP_ACCESS_TOKEN")
-
+        #print("=-=-=-=-=-=-=-", squareup_access_token)
         if not squareup_access_token:
             raise ValueError("Squareup access token not found in environment variables. Please set SQUAREUP_ACCESS_TOKEN.")
 
