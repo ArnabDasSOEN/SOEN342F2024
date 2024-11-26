@@ -1,10 +1,20 @@
+"""
+This module defines the EmailNotification class for sending email notifications
+using the Mailgun API and interacting with the database.
+"""
+
 import os
 import requests
-from .notification import Notification
 from dbconnection import db
+from .notification import Notification
 
 
 class EmailNotification(Notification):
+    """
+    The EmailNotification class handles email notification functionality, including
+    sending emails via Mailgun and updating the notification state in the database.
+    """
+
     __tablename__ = 'email_notifications'
     id = db.Column(db.Integer, db.ForeignKey(
         'notifications.id'), primary_key=True)
@@ -26,7 +36,7 @@ class EmailNotification(Notification):
         mailgun_domain = os.getenv("MAILGUN_DOMAIN")
 
         if not mailgun_api_key or not mailgun_domain:
-            raise Exception("Mailgun API key or domain not configured")
+            raise ValueError("Mailgun API key or domain not configured")
 
         try:
             response = requests.post(
@@ -37,16 +47,17 @@ class EmailNotification(Notification):
                     "to": "testerstests06@gmail.com",
                     "subject": "Order Status Update",
                     "text": self.message_content,
-                }
+                },
+                timeout=10  # Set an appropriate timeout value
             )
 
             # Check if the email was sent successfully
             if response.status_code == 200:
                 return True
-            else:
-                print(f"Mailgun API Error: {
-                      response.status_code} - {response.text}")
-                return False
+
+            print(f"Mailgun API Error: {
+                  response.status_code} - {response.text}")
+            return False
         except requests.exceptions.RequestException as e:
             print(f"Request error: {e}")
             return False

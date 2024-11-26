@@ -1,4 +1,9 @@
-from models.logistics.package import Package, FragilePackage
+"""
+Package Update Service
+Handles updates to packages, including their specifications and associated items.
+"""
+
+from models.logistics.package import Package
 from models.customer_interaction.package_item import PackageItem
 from models.customer_interaction.imperial_package_specification import ImperialPackageSpecification
 from models.customer_interaction.metric_package_specification import MetricPackageSpecification
@@ -8,14 +13,31 @@ from dbconnection import db
 
 
 class PackageUpdateService:
+    """
+    Service class for updating package details and associated items.
+    """
+
     @staticmethod
-    def update_package(package_id: int, package_data: dict):
+    def update_package(package_id: int, package_data: dict) -> Package:
+        """
+        Updates the package details, including its specifications and items.
+
+        Args:
+            package_id (int): The ID of the package to update.
+            package_data (dict): The updated package data.
+
+        Returns:
+            Package: The updated package instance.
+
+        Raises:
+            ValueError: If the package is not found.
+        """
         # Retrieve the existing package
         package = Package.query.get(package_id)
         if not package:
             raise ValueError("Package not found")
 
-        # Update package specifications based on unit system
+        # Update package specifications
         unit_system = package_data.get("unit_system", "metric")
         is_fragile = package_data.get("is_fragile", package.is_fragile)
 
@@ -36,7 +58,7 @@ class PackageUpdateService:
             )
             package_spec = MetricPackageAdapter(metric_spec).standard_spec
 
-        # Update the package specification
+        # Persist the updated package specification
         db.session.add(package_spec)
         db.session.commit()
 
@@ -53,6 +75,16 @@ class PackageUpdateService:
 
     @staticmethod
     def update_package_items(package: Package, package_items_data: list):
+        """
+        Updates the items associated with a package.
+
+        Args:
+            package (Package): The package instance to update items for.
+            package_items_data (list): A list of item data dictionaries.
+
+        Returns:
+            None
+        """
         # Remove existing items associated with the package
         PackageItem.query.filter_by(package_id=package.id).delete()
 

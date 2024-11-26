@@ -1,3 +1,8 @@
+"""
+Package Factory
+Handles the creation of packages and their associated items and specifications.
+"""
+
 from models.logistics.package import Package, FragilePackage
 from models.customer_interaction.package_item import PackageItem
 from models.customer_interaction.imperial_package_specification import ImperialPackageSpecification
@@ -8,13 +13,28 @@ from dbconnection import db
 
 
 class PackageFactory:
+    """
+    A factory class for creating package instances with associated specifications and items.
+    """
+
     @staticmethod
     def create_package(package_data: dict) -> Package:
+        """
+        Creates a package with its specification and associated items.
+
+        Args:
+            package_data (dict): A dictionary containing package details, including dimensions,
+                                 weight, unit system, items, and whether it is fragile.
+
+        Returns:
+            Package: The created Package or FragilePackage instance.
+        """
+        # Extract unit system and package fragility
         unit_system = package_data.pop("unit_system", "metric")
         is_fragile = package_data.get("is_fragile", False)
         package_items_data = package_data.pop("package_items", [])
 
-        # Use appropriate adapter based on unit system
+        # Create and adapt package specification based on the unit system
         if unit_system == "imperial":
             imperial_spec = ImperialPackageSpecification(
                 width_in=package_data["width"],
@@ -32,16 +52,18 @@ class PackageFactory:
             )
             package_spec = MetricPackageAdapter(metric_spec).standard_spec
 
+        # Persist the package specification to the database
         db.session.add(package_spec)
         db.session.commit()
 
-        # Create package instance based on fragility
+        # Create the package (fragile or standard) and persist it
         package = FragilePackage(package_specification_id=package_spec.id) if is_fragile else Package(
-            package_specification_id=package_spec.id)
+            package_specification_id=package_spec.id
+        )
         db.session.add(package)
         db.session.commit()
 
-        # Add items to package
+        # Add items to the package
         for item_data in package_items_data:
             item = PackageItem(
                 package_id=package.id,

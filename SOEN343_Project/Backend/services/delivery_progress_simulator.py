@@ -1,25 +1,37 @@
+"""
+Delivery Progress Simulator
+Simulates the progress of a delivery, updating the tracker and estimated delivery time.
+"""
+
 import time
 from threading import Thread
 from flask import current_app
 from models.logistics.delivery_request import DeliveryRequest
 from models.logistics.tracker import Tracker, DeliveryStatus
-from .distance_service import DistanceService
+from distance_service import DistanceService
 from dbconnection import db
 
 
 def start_simulation(app, tracker_id):
     """
     Start the delivery simulation in a separate thread.
+
+    Args:
+        app (Flask): The Flask application instance.
+        tracker_id (int): The ID of the tracker to simulate progress for.
     """
     Thread(target=simulate_delivery_progress, args=(app, tracker_id)).start()
 
 
 def simulate_delivery_progress(app, tracker_id):
     """
-    Simulate the delivery agent's progress for OUT_FOR_DELIVERY status,
-    updating estimated delivery time.
+    Simulate the progress of a delivery for a given tracker ID.
+
+    Args:
+        app (Flask): The Flask application instance.
+        tracker_id (int): The ID of the tracker to simulate progress for.
     """
-    with app.app_context():  # Push the app context explicitly
+    with app.app_context():
         tracker = Tracker.query.get(tracker_id)
         if not tracker:
             print(f"Tracker with ID {tracker_id} not found.")
@@ -31,10 +43,12 @@ def simulate_delivery_progress(app, tracker_id):
             print(f"Delivery request for tracker {tracker_id} not found.")
             return
 
-        origin = f"{delivery_request.pick_up_address.street} {delivery_request.pick_up_address.house_number}, {
-            delivery_request.pick_up_address.city}, {delivery_request.pick_up_address.country}"
-        destination = f"{delivery_request.drop_off_address.street} {delivery_request.drop_off_address.house_number}, {
-            delivery_request.drop_off_address.city}, {delivery_request.drop_off_address.country}"
+        origin = f"{delivery_request.pick_up_address.street} {delivery_request.pick_up_address.house_number}, " \
+            f"{delivery_request.pick_up_address.city}, {
+                delivery_request.pick_up_address.country}"
+        destination = f"{delivery_request.drop_off_address.street} {delivery_request.drop_off_address.house_number}, " \
+            f"{delivery_request.drop_off_address.city}, {
+                delivery_request.drop_off_address.country}"
 
         try:
             # Fetch intermediate locations and calculate total travel time
@@ -53,7 +67,7 @@ def simulate_delivery_progress(app, tracker_id):
             print(f"Total travel time for tracker {
                   tracker_id}: {total_travel_time} minutes")
 
-            # Calculate the time to reach each intermediate location
+            # Calculate time to reach each intermediate location
             segment_time = total_travel_time / len(intermediate_locations)
 
             for location in intermediate_locations:
@@ -68,7 +82,7 @@ def simulate_delivery_progress(app, tracker_id):
                       tracker_id}: {tracker.estimated_delivery_time} minutes")
                 time.sleep(10)  # Simulate delay for demonstration purposes
 
-            # Mark as DELIVERED once all locations are processed
+            # Mark tracker as DELIVERED after all locations are processed
             tracker.update_status(DeliveryStatus.DELIVERED)
             print(f"Tracker {tracker_id} marked as DELIVERED.")
 

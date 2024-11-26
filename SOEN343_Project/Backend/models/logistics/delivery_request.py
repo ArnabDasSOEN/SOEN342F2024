@@ -1,4 +1,7 @@
-# models/logistics/delivery_request.py
+"""
+This module defines the DeliveryRequest class, which represents a delivery request
+in the system, including its customer, package, addresses, and status.
+"""
 
 from dbconnection import db
 from models.customer_interaction.customer import Customer
@@ -7,6 +10,11 @@ from models.logistics.package import Package
 
 
 class DeliveryRequest(db.Model):
+    """
+    The DeliveryRequest class represents a delivery request, including its associated
+    customer, package, pick-up and drop-off addresses, and current status.
+    """
+
     __tablename__ = 'delivery_requests'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,3 +38,5 @@ class DeliveryRequest(db.Model):
         "Address", foreign_keys=[drop_off_address_id], backref="dropoff_requests")
     package = db.relationship(
         "Package", backref="delivery_requests", uselist=False)
+
+    # pylint: disable=too-few-public-methods

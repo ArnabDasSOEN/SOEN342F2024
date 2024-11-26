@@ -1,11 +1,16 @@
-# models/logistics/tracker.py
+"""
+This module defines the Tracker class and DeliveryStatus enum for managing
+the tracking of orders and their statuses.
+"""
 
-from dbconnection import db
 from enum import Enum
-from models.logistics.order import Order
+from dbconnection import db
 
 
 class DeliveryStatus(Enum):
+    """
+    DeliveryStatus is an enum representing possible statuses for a delivery.
+    """
     IN_TRANSIT = "IN TRANSIT"
     OUT_FOR_DELIVERY = "OUT FOR DELIVERY"
     DELIVERED = "DELIVERED"
@@ -19,6 +24,10 @@ ORDER_STATUS_MAPPING = {
 
 
 class Tracker(db.Model):
+    """
+    Tracker represents the tracking information for an order, including its current
+    status, associated delivery agent, and estimated delivery time.
+    """
     __tablename__ = 'trackers'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -35,9 +44,14 @@ class Tracker(db.Model):
     delivery_agent = db.relationship(
         "DeliveryAgent", back_populates="trackers")
 
-    def update_status(self, new_status, delivery_time=None):
+    # pylint: disable=too-few-public-methods
+    def update_status(self, new_status: DeliveryStatus, delivery_time: float = None):
         """
         Update tracker status and optionally set estimated delivery time.
+
+        Args:
+            new_status (DeliveryStatus): The new delivery status.
+            delivery_time (float, optional): The estimated time for delivery in minutes.
         """
         self.status = new_status.value
         if delivery_time is not None:

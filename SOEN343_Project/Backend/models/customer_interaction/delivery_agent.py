@@ -1,11 +1,18 @@
-# models/customer_interaction/delivery_agent.py
+"""
+This module defines the DeliveryAgent class, which extends the User class to include
+delivery agent-specific attributes and relationships with orders and trackers.
+"""
 
-from dbconnection import db
-from .user import User
-from models.logistics.tracker import Tracker  # Ensure Tracker is imported
+from dbconnection import db  # First-party import
+from .user import User  # Local import
 
 
 class DeliveryAgent(User):
+    """
+    The DeliveryAgent class represents delivery agents in the system. It extends
+    the User class and includes relationships with orders and trackers.
+    """
+
     __tablename__ = 'delivery_agents'
 
     id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
@@ -20,5 +27,4 @@ class DeliveryAgent(User):
         'polymorphic_identity': 'deliveryagent',
     }
 
-    def __init__(self, name, password, email, phone_number):
-        super().__init__(name, password, email, phone_number)
+    # pylint: disable=too-few-public-methods
