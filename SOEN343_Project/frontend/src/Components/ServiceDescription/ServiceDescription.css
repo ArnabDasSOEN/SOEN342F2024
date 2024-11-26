@@ -4,6 +4,7 @@
     justify-content: space-around;
     gap: 20px;
     padding: 40px;
+    font-family: 'Avenir';
   }
   
   .description-item {
@@ -21,6 +22,12 @@
   .description-item.fade-in {
     opacity: 1; /* Fade in */
     transform: translateY(0); /* Move to original position */
+  }
+
+  .description-item:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    background-color: white;
   }
   
   .description-item h3 {

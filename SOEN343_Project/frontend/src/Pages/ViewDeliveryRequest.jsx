@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DeliveryRequest } from "../Components/DeliveryRequests";
+import { PayDeliveryRequest } from "./PayDeliveryRequest";
 
 export const ViewDeliveryRequest = () => {
 
@@ -13,12 +14,11 @@ export const ViewDeliveryRequest = () => {
                 const data = {user_id}
                 //console.log(data);
                 const response = await axios.post("http://localhost:5000/delivery_request/view_delivery_requests", data )
-                console.log(response.data);
+                //console.log(response.data);
 
 
                 setRequests(response.data.map( item => {
                     return <DeliveryRequest id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
-
                 }))
 
 

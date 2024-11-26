@@ -40,7 +40,8 @@ function App() {
           <Route path='/viewDeliveryRequest' element={<ViewDeliveryRequest/>}/>
           <Route path='/trackOrders' element={<TrackOrders/>}/>
           {/* <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/> */}
-          <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/>
+          
+          {/* <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/> */}
 
         </Routes>
         <Chatbot/>
