@@ -17,11 +17,11 @@ export const UserHomePage = () => {
                         title = "View Delivery Requests" 
                         description = "View your pending delivery requests"/>
                 </Link>
-                <Link to="/payDeliveryRequest" className="user-homepage-card">
+                {/* <Link to="/payDeliveryRequest" className="user-homepage-card">
                     <DashboardCard 
                         title = "Pay Delivery Requests" 
                         description = "Pay for a delivery requests you already made"/>
-                </Link>
+                </Link> */}
                 <Link to="/viewOrders" className="user-homepage-card">
                     <DashboardCard 
                         title = "View Orders" 

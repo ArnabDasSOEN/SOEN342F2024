@@ -8,7 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const SQUAREUP_APPLICATION_ID = process.env.REACT_APP_SQUAREUP_APPLICATION_ID;
 const SQUAREUP_LOCATION_ID = process.env.REACT_APP_SQUAREUP_LOCATION_ID;
 
-export const PayDeliveryRequest = () => {
+export const PayDeliveryRequest = ({id}) => {
+  //const dynamicId = `${id}card-container`;
 
   const [paymentID, setPaymentID] = useState(null)
   const onIDChange = (e) => {
@@ -30,7 +31,7 @@ export const PayDeliveryRequest = () => {
       //we start by setting up the actual payment. This is the token that gets sent to the backend. Read more abty this here: https://developer.squareup.com/docs/web-payments/take-card-payment
       const payments = window.Square.payments(SQUAREUP_APPLICATION_ID, SQUAREUP_LOCATION_ID);
       const card = await payments.card();// Cwe need to creat the card payment thing before we do anything. 
-      await card.attach('#card-container'); // attaching directly to the DOM is discouraged but in this case we got to do it. DW tho, this only loads when the file gets loaded.
+      await card.attach("#card-container"); // attaching directly to the DOM is discouraged but in this case we got to do it. DW tho, this only loads when the file gets loaded.
       //just a note, in the above code, were attaching the card to the div returned in this component. SO althought were "directly manipulating the DOM" when we change pages, react
       //unmounts everything that it added from this component.
       setPaymentForm({ payments, card });// Store the payment form state (basically create the form and set it aside for now)
@@ -52,9 +53,11 @@ export const PayDeliveryRequest = () => {
 
         // This is where we send "result.token" to the backend to log the payment. Remeber that were using a sandbox
         try{
+          //axios.post("/payment/make_payment") // , + data in a object
+
 
         } catch (e) {
-          //axios.post("/payment/make_payment") // , + data in a object
+          
         }
 
 
