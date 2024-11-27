@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import axios from "axios";
+import axios from "axios";
 //import { PaymentForm } from "../Components/PaymentForm";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,11 +11,11 @@ const SQUAREUP_LOCATION_ID = process.env.REACT_APP_SQUAREUP_LOCATION_ID;
 export const PayDeliveryRequest = ({id}) => {
   //const dynamicId = `${id}card-container`;
 
-  const [paymentID, setPaymentID] = useState(null)
-  const onIDChange = (e) => {
-    const { value } = e.target;
-    setPaymentID(value);
-  }
+  // const [paymentID, setPaymentID] = useState(null)
+  // const onIDChange = (e) => {
+  //   const { value } = e.target;
+  //   setPaymentID(value);
+  // }
 
   const [paymentForm, setPaymentForm] = useState("");
 
@@ -49,18 +49,20 @@ export const PayDeliveryRequest = ({id}) => {
       const result = await paymentForm.card.tokenize();
       if (result.status === 'OK') {
         console.log('Token:', result.token);
+        //console.log(result)
         toast.success("Payment successful. Tokenizing")
-
         // This is where we send "result.token" to the backend to log the payment. Remeber that were using a sandbox
         try{
-          //axios.post("/payment/make_payment") // , + data in a object
-
-
+          const data = {
+            delivery_request_id: id,
+            payment_method: result.token
+          }
+          console.log(data)
+          const response = await axios.post("http://localhost:5000/payment/make_payment", data) // , + data in a object
+          console.log(response)
         } catch (e) {
-          
+          console.log("error making a payment: ", e)
         }
-
-
       } else {
         console.error('Tokenization failed:', result);
         toast.error("Payment failed. Cannot tokenize")
@@ -77,10 +79,6 @@ export const PayDeliveryRequest = ({id}) => {
       <h1>Pay a delivery request</h1>
       <ToastContainer />
       <form action="POST" onSubmit={handlePayment}>
-        <label>
-          <input type="number" value={paymentID} onChange={onIDChange} placeholder="ID of your delivery request"></input>
-        </label>
-
         <div className="PaymentForm">
           <h2>Payment Form</h2>
             {/* This div is where the Square card input will render */}

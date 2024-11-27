@@ -1,13 +1,16 @@
-//import { Link } from "react-router-dom";
+//import {  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import "./CSS/RequestDelivery.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const libraries = ["places"]; // Load Places library
 
 export const Dashboard = () => {
-
+  
 
   const [autocompletePickup, setAutocompletePickup] = useState(null);
   const [autocompleteDropoff, setAutocompleteDropoff] = useState(null);
@@ -205,13 +208,29 @@ export const Dashboard = () => {
     try {
       const response = await axios.post("http://localhost:5000/delivery_request/create_delivery_request",deliveryDataObj);
       console.log("Response:", response.data);
+      toast.success("succesfully created delivery request")
+      resetInput()
+
     } catch (e) {
       console.error("Error submitting delivery request:", e);
     }
   };
 
+  const resetInput = () => {
+    const textInputs = document.querySelectorAll("input[type='text']");
+    const numberInputs = document.querySelectorAll("input[type='number']");
+    textInputs.forEach( el => {
+      el.value = "";
+    })
+    
+    numberInputs.forEach( el => {
+      el.value = 0;
+    })
+  }
+
   return (
     <main className="dashboard">
+      <ToastContainer/>
       <h1>{localStorage.getItem("username")}'s Dashboard</h1>
       <h2>Make request for delivery</h2>
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries}>

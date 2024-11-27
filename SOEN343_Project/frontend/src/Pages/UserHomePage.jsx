@@ -33,6 +33,12 @@ export const UserHomePage = () => {
                         description = "View the status of ongoing Orders here"/>
                 </Link>
 
+                <Link to="/viewPayments" className="user-homepage-card">
+                    <DashboardCard 
+                        title = "View payments" 
+                        description = "View all your payments here"/>
+                </Link>
+
                 {/* <Link to="/cancelDeliveryRequest"><DashboardCard title = "Cancel Delivery Requests" description = "Cancel your delivery requests here"/></Link> */}
 
             </div>

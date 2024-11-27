@@ -15,7 +15,8 @@ import { ViewOrders } from './Pages/ViewOrders.jsx';
 import { ViewDeliveryRequest } from "./Pages/ViewDeliveryRequest.jsx"
 import { TrackOrders } from './Pages/TrackOrders.jsx';
 //import { CancelDeliveryRequest } from './Pages/CancelDeliveryRequest.jsx';
-import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
+//import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
+import { ViewPayments } from './Pages/ViewPayments.jsx';
 
 function App() {
 
@@ -42,7 +43,7 @@ function App() {
           {/* <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/> */}
           
           {/* <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/> */}
-
+          <Route path='/viewPayments' element={<ViewPayments/>}/>
         </Routes>
         <Chatbot/>
         <Footer/>

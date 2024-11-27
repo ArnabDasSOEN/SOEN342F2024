@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { DeliveryRequest } from "../Components/DeliveryRequests";
-import { PayDeliveryRequest } from "./PayDeliveryRequest";
+//import { PayDeliveryRequest } from "./PayDeliveryRequest";
 
 export const ViewDeliveryRequest = () => {
 
@@ -18,7 +18,7 @@ export const ViewDeliveryRequest = () => {
 
 
                 setRequests(response.data.map( item => {
-                    return <DeliveryRequest id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
+                    return <DeliveryRequest key={item.delivery_request_id} id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
                 }))
 
 
