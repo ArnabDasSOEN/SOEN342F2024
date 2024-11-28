@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
+import './CSS/UpdateDelivery.css'
 
 const libraries = ["places"];
 
@@ -248,16 +249,16 @@ export const UpdateDelivery = () => {
     }
 
     return (
-        <main>
-            <h1>Update a delivery Request</h1>
+        <div className="update-delivery">
+            <h1>Update a Delivery Request</h1>
             <label>
-                Delivery request ID
+                Delivery Request ID
                 <input type="number" value={deliveryRequestID} onChange={handleDeliveryIDChange}/>
             </label>
 
             <ToastContainer />
-            <h1>{localStorage.getItem("username")}'s Dashboard</h1>
-            <h2>Make request for delivery</h2>
+            {/* <h1>{localStorage.getItem("username")}'s Dashboard</h1> */}
+            {/* <h2>Make request for delivery</h2> */}
             <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries}>
                 <form onSubmit={handleSubmitForm}>
                     <h3>Pick Up Location</h3>
@@ -347,6 +348,6 @@ export const UpdateDelivery = () => {
                     </div>
                 </form>
             </LoadScript>
-        </main>
+        </div>
     )
 }
