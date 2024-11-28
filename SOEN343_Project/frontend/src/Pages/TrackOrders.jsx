@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios"
+import {TrackingInfoBox} from "../Components/TrackingInfoBox.jsx";
 
 export const TrackOrders = () => {
 
@@ -8,10 +10,23 @@ export const TrackOrders = () => {
         setOrderId(e.target.value)
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
+        try{
+        const data = {order_id: orderId}
+        const response = await axios.post("http://localhost:5000/delivery_agent/track", data)
+        const { message, status} = response.data
+        setTrackingInfo(<TrackingInfoBox message={message} status={status}/>)
+        } catch (e){
+            setTrackingInfo(<TrackingInfoBox message="INVALID ORDER" status="INVALID ORDER"/>)
+        }
 
     }
+
+
+    const [trackingInfo, setTrackingInfo] = useState(null)
+
+
 
     return (
         <main>
@@ -25,6 +40,11 @@ export const TrackOrders = () => {
                     onChange={handleOrderIdChange} />
                 <button type="submit">Track</button>
             </form>
+
+            {trackingInfo}
+
+
+
         </main>
     );
 }
