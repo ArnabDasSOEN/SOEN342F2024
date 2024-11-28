@@ -5,6 +5,7 @@ creation, cancellation, updates, and retrieval of requests.
 
 from flask import Blueprint, request, jsonify, current_app
 from models.logistics.delivery_request import DeliveryRequest
+from models.customer_interaction.quotation import Quotation
 from dbconnection import db
 
 delivery_request_blueprint = Blueprint(
@@ -101,7 +102,7 @@ def cancel_delivery_request():
 @delivery_request_blueprint.route('/view_delivery_requests', methods=['POST'])
 def view_delivery_requests():
     """
-    Retrieve all delivery requests for a specific user.
+    Retrieve all delivery requests for a specific user, including associated quotations.
     """
     data = request.json
     user_id = data.get("user_id")
@@ -113,13 +114,19 @@ def view_delivery_requests():
         return jsonify({"error": "Invalid or missing user_id"}), 400
 
     try:
-        delivery_requests = DeliveryRequest.query.filter_by(
-            customer_id=user_id).all()
+        # Query delivery requests for the user
+        delivery_requests = DeliveryRequest.query.filter_by(customer_id=user_id).all()
+
         if not delivery_requests:
             return jsonify({"message": f"No delivery requests found for user_id {user_id}"}), 404
 
-        serialized_requests = [
-            {
+        # Serialize delivery requests with quotations
+        serialized_requests = []
+        for req in delivery_requests:
+            # Fetch the associated quotation for the delivery request
+            quotation = Quotation.query.filter_by(delivery_request_id=req.id).first()
+
+            serialized_requests.append({
                 "delivery_request_id": req.id,
                 "status": req.status,
                 "pick_up_address": {
@@ -133,12 +140,18 @@ def view_delivery_requests():
                     "house_number": req.drop_off_address.house_number,
                     "city": req.drop_off_address.city,
                     "country": req.drop_off_address.country
+                },
+                "quotation": {
+                    "id": quotation.id if quotation else None,
+                    "price": quotation.price if quotation else None
                 }
-            } for req in delivery_requests
-        ]
+            })
+
         return jsonify(serialized_requests), 200
+
     except Exception as error:
         return jsonify({"error": f"Server error: {error}"}), 500
+
 
 @delivery_request_blueprint.route('/update_delivery_request', methods=['POST'])
 def update_delivery_request():
