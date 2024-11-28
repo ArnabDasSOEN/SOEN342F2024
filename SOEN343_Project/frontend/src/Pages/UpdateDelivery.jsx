@@ -251,7 +251,8 @@ export const UpdateDelivery = () => {
         <main>
             <h1>Update a delivery Request</h1>
             <label>
-                <input type="number" value={deliveryRequestID} onChange={handleDeliveryIDChange} > Delivery request ID</input>
+                Delivery request ID
+                <input type="number" value={deliveryRequestID} onChange={handleDeliveryIDChange}/>
             </label>
 
             <ToastContainer />

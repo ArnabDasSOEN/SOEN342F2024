@@ -19,7 +19,10 @@ export const ViewPayments = () => {
             const response = await axios.post("http://localhost:5000/payment/payment_history", requestData)
             console.log(response.data)
             setPayments(
-                response.data.map( el => (<PaymentBox key={el.order_id} amount={el.amount} order_id={el.order_id} payment_date={el.payment_date} payment_id={el.payment_id} status={el.status}/>))
+                response.data.map( el => {
+                const amount = parseFloat(el.amount).toFixed(2);
+                return <PaymentBox key={el.order_id} amount={amount} order_id={el.order_id} payment_date={el.payment_date} payment_id={el.payment_id} status={el.status}/>
+            })
             )
 
             //console.log(response.data)
