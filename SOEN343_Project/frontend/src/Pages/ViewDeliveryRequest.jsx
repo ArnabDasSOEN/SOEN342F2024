@@ -16,9 +16,10 @@ export const ViewDeliveryRequest = () => {
                 //console.log(data);
                 const response = await axios.post("http://localhost:5000/delivery_request/view_delivery_requests", data )
                 //console.log(response.data);
-
+                console.log(response.data)
                 setRequests(response.data.map( item => {
-                    return <DeliveryRequest key={item.delivery_request_id} id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
+                    const quotation = parseFloat(item.quotation.price).toFixed(2);
+                    return <DeliveryRequest key={item.delivery_request_id} id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} quotation={quotation}/>
                 }))
 
 

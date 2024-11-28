@@ -3,6 +3,7 @@ import './Navbar.css'
 import { Link } from 'react-router-dom'
 import deliver_icon from '../Assets/Express_Delivery_Blue.png'
 //import { useState } from 'react'
+//import { NavigateToDashBoard } from '../NavigateToDashboard';
 
 export const Navbar = ({user_id, setUserId}) => {
 
@@ -15,6 +16,7 @@ export const Navbar = ({user_id, setUserId}) => {
 
   return (
     <div className='navbar'>
+      {/* <NavigateToDashBoard/> */}
       <Link to='/' className='linkToLanding'>
         <div className='nav-logo'>
           <img src={deliver_icon} alt=''></img>

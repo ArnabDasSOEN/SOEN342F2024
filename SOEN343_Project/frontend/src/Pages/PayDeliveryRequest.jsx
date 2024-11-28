@@ -3,19 +3,23 @@ import axios from "axios";
 //import { PaymentForm } from "../Components/PaymentForm";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from "react-router-dom";
 
 //our Key values
 const SQUAREUP_APPLICATION_ID = process.env.REACT_APP_SQUAREUP_APPLICATION_ID;
 const SQUAREUP_LOCATION_ID = process.env.REACT_APP_SQUAREUP_LOCATION_ID;
 
-export const PayDeliveryRequest = ({id}) => {
-  //const dynamicId = `${id}card-container`;
+export const PayDeliveryRequest = () => {
 
-  // const [paymentID, setPaymentID] = useState(null)
-  // const onIDChange = (e) => {
-  //   const { value } = e.target;
-  //   setPaymentID(value);
-  // }
+  const location = useLocation();
+  const { id, quotation } = location.state || {};
+
+
+
+
+
+
+
 
   const [paymentForm, setPaymentForm] = useState("");
 
@@ -76,11 +80,12 @@ export const PayDeliveryRequest = ({id}) => {
 
   return (
     <main>
-      <h1>Pay a delivery request</h1>
+      <h1>Pay for delivery request</h1>
       <ToastContainer />
       <form action="POST" onSubmit={handlePayment}>
         <div className="PaymentForm">
           <h2>Payment Form</h2>
+          <h4>${quotation}</h4>
             {/* This div is where the Square card input will render */}
             <div id="card-container"></div>
         </div>

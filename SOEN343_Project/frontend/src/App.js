@@ -15,7 +15,7 @@ import { ViewOrders } from './Pages/ViewOrders.jsx';
 import { ViewDeliveryRequest } from "./Pages/ViewDeliveryRequest.jsx"
 import { TrackOrders } from './Pages/TrackOrders.jsx';
 //import { CancelDeliveryRequest } from './Pages/CancelDeliveryRequest.jsx';
-//import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
+import { PayDeliveryRequest } from './Pages/PayDeliveryRequest.jsx';
 import { ViewPayments } from './Pages/ViewPayments.jsx';
 import { UpdateDelivery } from './Pages/UpdateDelivery.jsx';
 
@@ -43,7 +43,7 @@ function App() {
           <Route path='/trackOrders' element={<TrackOrders/>}/>
           {/* <Route path='/cancelDeliveryRequest' element={<CancelDeliveryRequest/>}/> */}
           
-          {/* <Route path='/payDeliveryRequest' element={<PayDeliveryRequest/>}/> */}
+          <Route path='/payDeliveryRequest' element={<PayDeliveryRequest  />}/>
           <Route path='/viewPayments' element={<ViewPayments/>}/>
           <Route path='/updateDeliveryRequest' element={<UpdateDelivery/>}/>
 

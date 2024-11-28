@@ -5,12 +5,13 @@ import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import "./CSS/RequestDelivery.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 
 const libraries = ["places"]; // Load Places library
 
 export const Dashboard = () => {
-  
+  const navigate = useNavigate()
 
   const [autocompletePickup, setAutocompletePickup] = useState(null);
   const [autocompleteDropoff, setAutocompleteDropoff] = useState(null);
@@ -207,9 +208,20 @@ export const Dashboard = () => {
 
     try {
       const response = await axios.post("http://localhost:5000/delivery_request/create_delivery_request",deliveryDataObj);
-      console.log("Response:", response.data);
+      console.log("Response OF DELIVERY REQUEST:", response.data);
       toast.success("succesfully created delivery request")
       resetInput()
+
+
+      //moving to the 
+      setTimeout( () => {
+        const id = response.data.delivery_request_id;
+        const quotation = parseFloat(response.data.quotation_price).toFixed(2);
+        navigate("/payDeliveryRequest", { state: { id, quotation } })
+      },2000)
+
+
+
 
     } catch (e) {
       console.error("Error submitting delivery request:", e);
@@ -227,6 +239,25 @@ export const Dashboard = () => {
       el.value = 0;
     })
   }
+
+
+  // const handleWantToPay = (e) => {
+  //   navigate("/payDeliveryRequest", { state: { id, quotation } })
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <main className="dashboard">
