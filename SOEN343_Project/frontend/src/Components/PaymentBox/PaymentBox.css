@@ -1,0 +1,51 @@
+.payment-box {
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 80%;
+    margin: 20px auto;
+    font-family: 'Avenir';
+  }
+  
+  .payment-details {
+    display: block; /* Make the layout stack vertically */
+    margin-top: 15px;
+  }
+  
+  .payment-details .label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .payment-details .value {
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .payment-details .status.completed {
+    text-transform: capitalize;
+    font-weight: bold;
+    color: #28a745;
+    background-color: #c9f4d3;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .payment-details .status.processing {
+    text-transform: capitalize;
+    font-weight: bold;
+    color: #ffc107;
+    background-color:#f9e9bb;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .payment-box p {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #666;
+  }
+  

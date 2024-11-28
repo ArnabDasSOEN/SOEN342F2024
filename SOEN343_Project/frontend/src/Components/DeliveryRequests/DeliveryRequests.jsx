@@ -1,8 +1,9 @@
-import { PayDeliveryRequest } from "../Pages/PayDeliveryRequest";
+import { PayDeliveryRequest } from "../../Pages/PayDeliveryRequest";
 import { useState } from "react"
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './DeliveryRequests.css'
 
 export const DeliveryRequest = ({ id, status, pickUp, dropOff }) => {
 
@@ -36,7 +37,7 @@ export const DeliveryRequest = ({ id, status, pickUp, dropOff }) => {
 
 
     return (
-        <div>
+        <div className="delivery-request-container">
             <ToastContainer />
             <span>{id}</span>
             <h6>Pick up location</h6>
@@ -53,20 +54,20 @@ export const DeliveryRequest = ({ id, status, pickUp, dropOff }) => {
                 <span>{dropOff.house_number}</span>
                 <span>{dropOff.street}</span>
             </div>
-            <span>{status}</span>
-            <button onClick={handleWantToPay}>pay now</button>
+            <span className={`status ${status.toLowerCase()}`}>{status}</span>
+            <button onClick={handleWantToPay}>Pay Now</button>
 
             {/* {wantToPay ? <PayDeliveryRequest id={id} /> : null} */}
             
             {
                 wantToPay
                     ? (
-                        status !== "Cancelled" ? <PayDeliveryRequest id={id} /> : null
+                        status !== "Cancelled" ?<div className="pay-delivery-container"> <PayDeliveryRequest id={id} /> </div>: null
                     )
                     : null
             }
 
-            {status === "Cancelled" ? null : <button type="button" onClick={handleCancelDeliveryRequest} >cancel delivery request</button>}
+            {status === "Cancelled" ? null : <button type="button" className="cancel-button" onClick={handleCancelDeliveryRequest} >cancel delivery request</button>}
 
 
 

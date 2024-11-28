@@ -35,7 +35,7 @@ export const UserHomePage = () => {
 
                 <Link to="/viewPayments" className="user-homepage-card">
                     <DashboardCard 
-                        title = "View payments" 
+                        title = "View Payments" 
                         description = "View all your payments here"/>
                 </Link>
 

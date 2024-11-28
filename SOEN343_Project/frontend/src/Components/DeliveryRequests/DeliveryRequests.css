@@ -1,0 +1,111 @@
+.delivery-request-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 320px;
+    width: 100%;
+    margin: 20px;
+    font-family: 'Avenir';
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+.delivery-request-container span {
+    font-size: 14px;
+    color: #555;
+}
+
+.delivery-request-container h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.delivery-request-container div {
+    margin-bottom: 10px;
+}
+
+.delivery-request-container div span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+}
+.delivery-request-container .status {
+    font-size: 15px;
+    margin-top: 10px;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.delivery-request-container .status.cancelled {
+    color: #dc3545;
+    background-color: #ffcad0;
+}
+
+.delivery-request-container .status.delivered {
+    color: #28a745;
+    background-color: #c9f4d3;
+}
+
+.delivery-request-container button {
+    position: absolute;
+    bottom: 20px; 
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 80%; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delivery-request-container button:hover {
+    background-color: #0056b3;
+}
+
+.delivery-request-container .cancel-button {
+    background-color: #dc3545;
+    width: auto;
+    padding: 8px 15px;
+    margin-top: 15px;
+}
+
+.delivery-request-container .cancel-button:hover {
+    background-color: #c82333;
+}
+
+.pay-delivery-container {
+    margin-top: 20px;
+    background-color: #eef0f5;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.pay-delivery-container h6 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.pay-delivery-container .payment-info {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #555;
+}
+
+.view-delivery-request-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
