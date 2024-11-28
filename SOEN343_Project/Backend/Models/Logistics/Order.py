@@ -18,7 +18,7 @@ class Order(db.Model, Subject):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True)
-    delivery_request_id = db.Column(db.Integer, nullable=False)
+    delivery_request_id = db.Column(db.Integer, db.ForeignKey('delivery_requests.id'), nullable=False)
     customer_id = db.Column(db.Integer, db.ForeignKey(
         'customers.id'), nullable=False)  # Foreign key to Customer
     status = db.Column(db.String(50), nullable=False, default="Pending")
@@ -30,6 +30,7 @@ class Order(db.Model, Subject):
     delivery_agent = db.relationship("DeliveryAgent", back_populates="orders")
     _observers = db.relationship(
         "Notification", backref="order", cascade="all, delete-orphan")
+    delivery_request = db.relationship("DeliveryRequest", backref="orders")
 
     def __init__(self, delivery_request_id: int, customer_id: int, delivery_agent_id: int = None, status: str = "Pending"):
         """

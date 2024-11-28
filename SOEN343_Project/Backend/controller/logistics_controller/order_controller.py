@@ -65,6 +65,7 @@ def get_orders_by_user():
                 } if delivery_request else "N/A",
             })
 
+
         return jsonify(serialized_orders), 200
 
     except AttributeError as attr_err:
