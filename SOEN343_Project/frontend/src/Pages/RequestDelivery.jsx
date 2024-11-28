@@ -262,8 +262,8 @@ export const Dashboard = () => {
   return (
     <main className="dashboard">
       <ToastContainer/>
-      <h1>{localStorage.getItem("username")}'s Dashboard</h1>
-      <h2>Make request for delivery</h2>
+      {/* <h1>{localStorage.getItem("username")}'s Dashboard</h1> */}
+      <h1>Make Request for Delivery</h1>
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries}>
         <form onSubmit={handleSubmitForm}>
           <h3>Pick Up Location</h3>

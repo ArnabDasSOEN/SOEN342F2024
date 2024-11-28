@@ -1,0 +1,61 @@
+.update-delivery {
+    font-family: 'Avenir';
+    max-width: 800px;
+    width: 100%; /* Ensures it uses available space */
+    margin: 20px auto; /* Centers horizontally */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-delivery h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.update-delivery label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.update-delivery input, select {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.2s;
+    margin-bottom: 10px;
+}
+
+.update-delivery input:focus, select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.update-delivery button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.update-delivery button:hover {
+    background-color: #0056b3;
+}
+
+.update-delivery .button-container { 
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Optional: Adds space between buttons */
+}
