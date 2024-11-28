@@ -1,6 +1,7 @@
 import {  useState, useEffect } from "react"
 import axios from "axios"
-import { PaymentBox } from "../Components/PaymentBox"
+import { PaymentBox } from "../Components/PaymentBox/PaymentBox"
+import './CSS/ViewPayments.css'
 
 export const ViewPayments = () => {
     
@@ -34,11 +35,10 @@ export const ViewPayments = () => {
 
 
     return(
-        <main>
+        <div className="view-payments">
             <h1>Payments made</h1>
             {payments}
-
-        </main>
+        </div>
     )
 
 }

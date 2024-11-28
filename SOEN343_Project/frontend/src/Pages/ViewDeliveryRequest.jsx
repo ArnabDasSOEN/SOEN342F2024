@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { DeliveryRequest } from "../Components/DeliveryRequests";
+import { DeliveryRequest } from "../Components/DeliveryRequests/DeliveryRequests";
 //import { PayDeliveryRequest } from "./PayDeliveryRequest";
+import './CSS/ViewDeliveryRequest.css'
 
 export const ViewDeliveryRequest = () => {
 
@@ -35,10 +36,12 @@ export const ViewDeliveryRequest = () => {
     
 
     return (
-        <main>
-            <h1>Pending delivery Request</h1>
+        <div className="view-delivery-request">
+            <h1>Pending Delivery Request</h1>
             <h2>Implement cancel as well from this</h2>
-            {requests}
-        </main>
+            <div className="view-delivery-request-container">
+                {requests}
+            </div>
+        </div>
     );
 }
