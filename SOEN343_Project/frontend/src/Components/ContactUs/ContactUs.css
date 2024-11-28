@@ -1,0 +1,69 @@
+.contact-us {
+    text-align: center;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 0px 140px;
+    margin-bottom: 150px;
+    background: linear-gradient(180deg, #E2FDFF 0%, #889899 0%, #DDF7F9 0%, white 100%);
+}
+
+.contact-us h2{
+    font-size: 48px;
+    font-weight: 400;
+    font-family: 'Avenir';
+}
+.contact-us-form {
+    width: 500px;
+    margin: auto;
+}
+
+.contact-us-form label {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    color: rgb(100, 100, 100);
+    display: flex;
+}
+
+.contact-us-form input {
+    width: 95%;
+    height: 30px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: solid 1px #c9c9c9;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Avenir';
+    font-size: 20px;
+}
+
+.contact-us-form textarea {
+    width: 95%;
+    height: 200px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: solid 1px #c9c9c9;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Avenir';
+    font-size: 20px;
+}
+
+.contact-us button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #163760;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-us button:hover {
+    background-color: #2a6ab8;
+}
