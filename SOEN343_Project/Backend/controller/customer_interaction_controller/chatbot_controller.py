@@ -65,9 +65,11 @@ def ask_chatbot():
             session_state[user_id]["pending_command"] = "check_payment_status"
             return jsonify({"reply": "Please provide your order ID to check payment status."}), 200
 
+        if "create delivery request" in user_message.lower():
+            return handle_create_delivery(user_context)
+
         if "update my delivery" in user_message.lower():
-            session_state[user_id]["pending_command"] = "update_delivery_request"
-            return jsonify({"reply": "Please provide the delivery request ID to update your delivery."}), 200
+            return handle_update_delivery_request(user_context)
 
         if "cancel my delivery" in user_message.lower():
             session_state[user_id]["pending_command"] = "cancel_delivery_request"
@@ -129,20 +131,9 @@ def handle_payment_status(user_context):
 
 def handle_update_delivery_request(user_context):
     """
-    Handle updating delivery requests.
+    Redirect to the delivery update page.
     """
-    delivery_request_id = user_context.get("delivery_request_id")
-    if not delivery_request_id:
-        return jsonify({"reply": "Please provide the delivery request ID to update your delivery."}), 200
-
-    response = requests.post(
-        f"{request.host_url}delivery_request/update",
-        json={"delivery_request_id": delivery_request_id}
-    )
-    if response.status_code == 200:
-        return jsonify({"reply": "Your delivery request has been updated successfully."}), 200
-    else:
-        return jsonify({"reply": "Failed to update delivery request. Please ensure the request ID is correct."}), 500
+    return jsonify({"reply": "navigate:update_delivery_request"}), 200
 
 
 def handle_cancel_delivery_request(user_context):
@@ -273,3 +264,10 @@ def handle_view_delivery_requests(user_id):
     except requests.RequestException as e:  # Handle request errors
         print(f"Error fetching delivery requests: {e}")
         return jsonify({"reply": "An error occurred while fetching delivery requests. Please try again later."}), 500
+
+
+def handle_create_delivery(user_context):
+    """
+    Handle creating a new delivery request.
+    """
+    return jsonify({"reply": "navigate:create_delivery"}), 200

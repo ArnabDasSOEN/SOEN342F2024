@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Chatbot.css";
 import chat_icon from "../Assets/Chat.png";
 import axios from "axios";
@@ -6,8 +7,8 @@ import axios from "axios";
 export const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [isSending, setIsSending] = useState(false); // Track message sending state
-  const [context, setContext] = useState({}); // Maintain the context dynamically
+  const [isSending, setIsSending] = useState(false);
+  const navigate = useNavigate();
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -18,67 +19,44 @@ export const Chatbot = () => {
       e.preventDefault();
       const newMessage = e.target.value.trim();
 
-      // Retrieve user ID from localStorage
-      const userId = localStorage.getItem("user_id");
-
-      if (!userId) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            text: "Error: User ID is not set. Please log in again.",
-            user: "Bot",
-          },
-        ]);
-        return;
-      }
+      const userId = parseInt(localStorage.getItem("user_id"), 10);
 
       if (newMessage) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: newMessage, user: "You" },
-        ]);
+        setMessages([...messages, { text: newMessage, user: "You" }]);
         e.target.value = "";
 
         try {
           setIsSending(true);
 
-          // Build payload with current context
           const payload = {
             message: newMessage,
             context: {
-              ...context,
-              user_id: userId,
+              user_id: userId || null,
             },
           };
 
-          console.log("Payload being sent to backend:", payload);
-
-          // Send request to backend
           const response = await axios.post(
             "http://localhost:5000/chatbot/ask",
             payload
           );
 
           if (response.data.reply) {
-            setMessages((prevMessages) => [
-              ...prevMessages,
-              { text: response.data.reply, user: "Bot" },
-            ]);
+            const botMessage = response.data.reply;
 
-            // Update context based on backend response if necessary
-            const pendingCommand = response.data.pending_command;
-            if (pendingCommand) {
-              // Store pending command context if backend indicates it's needed
-              setContext((prevContext) => ({
-                ...prevContext,
-                pending_command: pendingCommand,
-              }));
+            // Handle navigation commands
+            if (botMessage.includes("navigate:update_delivery_request")) {
+              setIsOpen(false); // Close chatbot
+              navigate("/viewDeliveryRequest");
+              window.location.reload(); // Force reload
+            } else if (botMessage.includes("navigate:create_delivery")) {
+              setIsOpen(false); // Close chatbot
+              navigate("/dashboard");
+              window.location.reload(); // Force reload
             } else {
-              // Clear pending command when fulfilled
-              setContext((prevContext) => ({
-                ...prevContext,
-                pending_command: null,
-              }));
+              setMessages((prevMessages) => [
+                ...prevMessages,
+                { text: botMessage, user: "Bot" },
+              ]);
             }
           } else {
             setMessages((prevMessages) => [
