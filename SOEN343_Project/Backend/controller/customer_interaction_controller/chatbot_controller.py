@@ -208,7 +208,6 @@ def handle_view_payment_history(user_id=None):
             for payment in payments:
                 reply += f"- Payment ID: {payment['payment_id']}, Amount: {
                     payment['amount']}, Status: {payment['status']}, Order ID: {payment['order_id']}\n"
-            reply += "Please reply with the Order ID to check its status."
             return jsonify({"reply": reply}), 200
 
         elif response.status_code == 404:  # Handle 404 status code explicitly
@@ -252,7 +251,6 @@ def handle_view_delivery_requests(user_id):
             for req in delivery_requests:
                 reply += f"- Request ID: {req['delivery_request_id']
                                           }, Status: {req['status']}\n"
-            reply += "Reply with the Request ID to perform actions (e.g., cancel, update)."
             return jsonify({"reply": reply}), 200
 
         elif response.status_code == 404:  # Handle 404 status code explicitly
