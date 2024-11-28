@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
 
+const libraries = ["places"];
 
 export const UpdateDelivery = () => {
 
@@ -11,7 +12,7 @@ export const UpdateDelivery = () => {
     const handleDeliveryIDChange = (e) => {
         setDeliveryRequestID(e.target.value);
     }
-    
+
 
 
     const [autocompletePickup, setAutocompletePickup] = useState(null);
@@ -183,17 +184,17 @@ export const UpdateDelivery = () => {
             delivery_request_id: deliveryRequestID
         }
 
-        if( !(pickUpAddress.street === "" || pickUpAddress.house_number === "")){
-            deliveryDataObj = {...deliveryDataObj, pick_up_address: pickUpAddress}
+        if (!(pickUpAddress.street === "" || pickUpAddress.house_number === "")) {
+            deliveryDataObj = { ...deliveryDataObj, pick_up_address: pickUpAddress }
         }
 
-        if( !(dropOffAddress.street === "" || dropOffAddress.house_number === "")){
-            deliveryDataObj = {...deliveryDataObj, drop_off_address: dropOffAddress}
+        if (!(dropOffAddress.street === "" || dropOffAddress.house_number === "")) {
+            deliveryDataObj = { ...deliveryDataObj, drop_off_address: dropOffAddress }
         }
 
 
 
-        if( !(packageInfo.length === 0 || packageInfo.width === 0 || packageInfo.height === 0 || packageInfo.weight === 0)){
+        if (!(packageInfo.length === 0 || packageInfo.width === 0 || packageInfo.height === 0 || packageInfo.weight === 0)) {
             const normalizedPackageInfo = {
                 ...packageInfo,
                 length: parseFloat(packageInfo.length),
@@ -206,7 +207,7 @@ export const UpdateDelivery = () => {
                     weight: parseFloat(item.weight),
                 })),
             };
-            deliveryDataObj = {...deliveryDataObj, package: normalizedPackageInfo}
+            deliveryDataObj = { ...deliveryDataObj, package: normalizedPackageInfo }
         }
 
 
@@ -253,6 +254,98 @@ export const UpdateDelivery = () => {
                 <input type="number" value={deliveryRequestID} onChange={handleDeliveryIDChange} > Delivery request ID</input>
             </label>
 
+            <ToastContainer />
+            <h1>{localStorage.getItem("username")}'s Dashboard</h1>
+            <h2>Make request for delivery</h2>
+            <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries}>
+                <form onSubmit={handleSubmitForm}>
+                    <h3>Pick Up Location</h3>
+                    <Autocomplete onLoad={onLoadPickup} onPlaceChanged={onPlaceChangedPickup}>
+                        <input type="text" name="street" className="location-input" placeholder="Enter pickup address" onChange={handlePickUpAddressChange} />
+                    </Autocomplete>
+                    <h3>Drop Off Location</h3>
+                    <Autocomplete onLoad={onLoadDropoff} onPlaceChanged={onPlaceChangedDropoff}>
+                        <input type="text" name="street" className="location-input" placeholder="Enter drop-off address" onChange={handleDropOffAddressChange} />
+                    </Autocomplete>
+
+                    <h3>Package Information</h3>
+                    <select value={selectedUnit} onChange={handleChangeUnits}>
+                        <option value="imperial">Imperial (inches, lbs)</option>
+                        <option value="metric">Metric (cm, kg)</option>
+                    </select>
+                    <label>
+                        Length:
+                        <input
+                            type="number"
+                            name="length"
+                            value={packageInfo.length}
+                            onChange={handlePackageChange}
+                        />
+                    </label>
+                    <label>
+                        Width:
+                        <input
+                            type="number"
+                            name="width"
+                            value={packageInfo.width}
+                            onChange={handlePackageChange}
+                        />
+                    </label>
+                    <label>
+                        Height:
+                        <input
+                            type="number"
+                            name="height"
+                            value={packageInfo.height}
+                            onChange={handlePackageChange}
+                        />
+                    </label>
+                    <label>
+                        Weight:
+                        <input
+                            type="number"
+                            name="weight"
+                            value={packageInfo.weight}
+                            onChange={handlePackageChange}
+                        />
+                    </label>
+
+                    <h3>Package Items</h3>
+                    <label>
+                        Item Description:
+                        <input
+                            type="text"
+                            name="item_description"
+                            value={packageItem.item_description}
+                            onChange={handlePackageItemChange}
+                        />
+                    </label>
+                    <label>
+                        Quantity:
+                        <input
+                            type="number"
+                            name="quantity"
+                            value={packageItem.quantity}
+                            onChange={handlePackageItemChange}
+                        />
+                    </label>
+                    <label>
+                        Weight:
+                        <input
+                            type="number"
+                            name="weight"
+                            value={packageItem.weight}
+                            onChange={handlePackageItemChange}
+                        />
+                    </label>
+                    <div className="button-container">
+                        <button type="button" onClick={handleAddPackageItem}>
+                            Add Package Item
+                        </button>
+                        <button type="submit">Submit Delivery Request</button>
+                    </div>
+                </form>
+            </LoadScript>
         </main>
     )
 }

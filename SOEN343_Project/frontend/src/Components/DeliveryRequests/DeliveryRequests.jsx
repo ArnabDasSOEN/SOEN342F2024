@@ -3,7 +3,7 @@ import { useState } from "react"
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './DeliveryRequests.css'
+//import './DeliveryRequests.css'
 
 export const DeliveryRequest = ({ id, status, pickUp, dropOff }) => {
 
@@ -55,19 +55,24 @@ export const DeliveryRequest = ({ id, status, pickUp, dropOff }) => {
                 <span>{dropOff.street}</span>
             </div>
             <span className={`status ${status.toLowerCase()}`}>{status}</span>
-            <button onClick={handleWantToPay}>Pay Now</button>
+            <button onClick={handleWantToPay}>Want to pay now?</button>
 
             {/* {wantToPay ? <PayDeliveryRequest id={id} /> : null} */}
             
+
+
+            {/* Cannot touch CSS for this*/}
             {
                 wantToPay
                     ? (
-                        status !== "Cancelled" ?<div className="pay-delivery-container"> <PayDeliveryRequest id={id} /> </div>: null
+                        status !== "Cancelled" ?  <PayDeliveryRequest id={id} /> : null
                     )
                     : null
             }
 
-            {status === "Cancelled" ? null : <button type="button" className="cancel-button" onClick={handleCancelDeliveryRequest} >cancel delivery request</button>}
+
+            {/* Can touch CSS for this*/}
+            {status === "Cancelled" ? null : <button type="button" onClick={handleCancelDeliveryRequest}> cancel delivery request </button>}
 
 
 

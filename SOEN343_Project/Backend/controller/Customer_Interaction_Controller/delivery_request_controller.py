@@ -140,7 +140,6 @@ def view_delivery_requests():
     except Exception as error:
         return jsonify({"error": f"Server error: {error}"}), 500
 
-
 @delivery_request_blueprint.route('/update_delivery_request', methods=['POST'])
 def update_delivery_request():
     """

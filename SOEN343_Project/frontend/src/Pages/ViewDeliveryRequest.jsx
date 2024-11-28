@@ -17,7 +17,6 @@ export const ViewDeliveryRequest = () => {
                 const response = await axios.post("http://localhost:5000/delivery_request/view_delivery_requests", data )
                 //console.log(response.data);
 
-
                 setRequests(response.data.map( item => {
                     return <DeliveryRequest key={item.delivery_request_id} id={item.delivery_request_id} status={item.status} pickUp={item.pick_up_address} dropOff={item.drop_off_address} />
                 }))
@@ -29,10 +28,6 @@ export const ViewDeliveryRequest = () => {
         }
         ViewDeliveries();
       }, []); //empty dependency implies tha tthe compoenent only rnders after initial rerender. aka, each time user clicks view deliveries, this will trigger a request and no more.
-    
-
-
-
     
 
     return (
