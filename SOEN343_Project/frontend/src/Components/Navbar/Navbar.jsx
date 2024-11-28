@@ -33,7 +33,7 @@ export const Navbar = ({user_id, setUserId}) => {
             {/* <Link to='/login'><button>Login</button></Link> */}
           </div>
           <div className='signup'>
-            <Link to='/signup'><button>Sign Up</button></Link>
+            {user_id == null ? <Link to='/signup'><button>Sign Up</button></Link> : <Link to='/userHomePage'><button>My Dashboard</button></Link>}
           </div>
         </div>
     </div>
