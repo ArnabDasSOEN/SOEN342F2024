@@ -35,6 +35,7 @@ class EmailNotification(Notification):
         mailgun_api_key = os.getenv("MAILGUN_API_KEY")
         mailgun_domain = os.getenv("MAILGUN_DOMAIN")
 
+
         if not mailgun_api_key or not mailgun_domain:
             raise ValueError("Mailgun API key or domain not configured")
 

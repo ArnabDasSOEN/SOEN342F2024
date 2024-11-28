@@ -36,9 +36,13 @@ class OrderFacade:
         # Commit the notifications to the database
         db.session.commit()
 
-        # Assign a delivery agent and create a tracker
+        # Assign a delivery agent
         delivery_agent = self.assign_delivery_agent(order)
         if delivery_agent:
+            # Update the order status to "In Transit" using the update_status method
+            order.update_status("In Transit")
+
+            # Create a tracker for the order
             tracker = Tracker(
                 order_id=order.id,
                 delivery_agent_id=delivery_agent.id,
@@ -57,3 +61,4 @@ class OrderFacade:
         else:
             print("No available delivery agents.")
             return None
+
