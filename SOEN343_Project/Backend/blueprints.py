@@ -5,6 +5,7 @@ from controller.customer_interaction_controller.user_controller import auth_blue
 
 # Import Chatbot blueprint
 from controller.customer_interaction_controller.chatbot_controller import chatbot_blueprint
+from controller.logistics_controller.order_controller import order_blueprint
 
 
 def register_blueprints(app):
@@ -22,3 +23,4 @@ def register_blueprints(app):
    # app.register_blueprint(delivery_agent_auth_blueprint)
     # Registers chatbot functionality
     app.register_blueprint(chatbot_blueprint)  # Add chatbot routes
+    app.register_blueprint(order_blueprint)
