@@ -1,0 +1,53 @@
+.order-box {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.order-box p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.order-box h4 {
+    margin: 12px 0 8px;
+    color: #444;
+    font-size: 1.2em;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+.order-box .order-id {
+    font-weight: bold;
+}
+
+.order-box .status {
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    color: #007bff;
+    width: 15%;
+    text-transform: uppercase;
+}
+
+.order-box .status.processing {
+    color: #a07800;
+    background-color:#f9e9bb;
+}
+
+.order-box .status.completed {
+    color: #28a745;
+    background-color: #c9f4d3;
+}
+
+.order-box .address {
+    margin-top: 16px;
+}
+
+.order-box .address h4 {
+    font-style: italic;
+}

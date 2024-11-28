@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
-import { OrderBox } from "../Components/OrderBox";
+import { OrderBox } from "../Components/OrderBox/OrderBox";
+import './CSS/ViewOrders.css'
 
 export const ViewOrders = () => {
 
@@ -36,10 +37,10 @@ export const ViewOrders = () => {
 
 
     return (
-        <main>
-            <h1>{localStorage.getItem("username")}'s orders</h1>
+        <div className="view-orders">
+            <h1>{localStorage.getItem("username")}'s Orders</h1>
             {orders}
 
-        </main>
+        </div>
     )
 }
