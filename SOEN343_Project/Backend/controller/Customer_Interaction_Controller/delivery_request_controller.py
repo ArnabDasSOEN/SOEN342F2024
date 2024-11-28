@@ -102,22 +102,14 @@ def cancel_delivery_request():
 def view_delivery_requests():
     """
     Retrieve all delivery requests for a specific user.
-
-    Expects JSON data:
-    {
-        "user_id": <int>
-    }
-
-    Returns:
-        - 200: List of delivery requests.
-        - 400: Invalid input.
-        - 404: No delivery requests found.
-        - 500: Server error.
     """
     data = request.json
     user_id = data.get("user_id")
 
-    if not user_id or not isinstance(user_id, int):
+    try:
+        # Convert user_id to an integer if it's a string
+        user_id = int(user_id)
+    except (TypeError, ValueError):
         return jsonify({"error": "Invalid or missing user_id"}), 400
 
     try:
@@ -128,24 +120,24 @@ def view_delivery_requests():
 
         serialized_requests = [
             {
-                "delivery_request_id": request.id,
-                "status": request.status,
+                "delivery_request_id": req.id,
+                "status": req.status,
                 "pick_up_address": {
-                    "street": request.pick_up_address.street,
-                    "house_number": request.pick_up_address.house_number,
-                    "city": request.pick_up_address.city,
-                    "country": request.pick_up_address.country
+                    "street": req.pick_up_address.street,
+                    "house_number": req.pick_up_address.house_number,
+                    "city": req.pick_up_address.city,
+                    "country": req.pick_up_address.country
                 },
                 "drop_off_address": {
-                    "street": request.drop_off_address.street,
-                    "house_number": request.drop_off_address.house_number,
-                    "city": request.drop_off_address.city,
-                    "country": request.drop_off_address.country
+                    "street": req.drop_off_address.street,
+                    "house_number": req.drop_off_address.house_number,
+                    "city": req.drop_off_address.city,
+                    "country": req.drop_off_address.country
                 }
-            } for request in delivery_requests
+            } for req in delivery_requests
         ]
         return jsonify(serialized_requests), 200
-    except RuntimeError as error:
+    except Exception as error:
         return jsonify({"error": f"Server error: {error}"}), 500
 
 
