@@ -54,7 +54,7 @@ export const PayDeliveryRequest = () => {
       if (result.status === 'OK') {
         console.log('Token:', result.token);
         //console.log(result)
-        toast.success("Payment successful. Tokenizing")
+        
         // This is where we send "result.token" to the backend to log the payment. Remeber that were using a sandbox
         try{
           const data = {
@@ -64,6 +64,7 @@ export const PayDeliveryRequest = () => {
           console.log(data)
           const response = await axios.post("http://localhost:5000/payment/make_payment", data) // , + data in a object
           console.log(response)
+          toast.success("Payment successful. Tokenizing")
         } catch (e) {
           console.log("error making a payment: ", e)
         }
@@ -92,6 +93,7 @@ export const PayDeliveryRequest = () => {
         <button type="submit" disabled={!paymentForm}>Pay Now</button>
       </form>
 
+      <p>*note, you can always pay later by navigating to <b>my dashboard</b> and click <b>view my delivery requests</b> </p>
     </main>
   );
 }
