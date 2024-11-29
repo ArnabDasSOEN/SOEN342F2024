@@ -15,8 +15,9 @@ export const TrackOrders = () => {
         try{
         const data = {order_id: orderId}
         const response = await axios.post("http://localhost:5000/delivery_agent/track", data)
-        const { message, status} = response.data
-        setTrackingInfo(<TrackingInfoBox message={message} status={status}/>)
+        console.log(response.data)
+        const { message, status, estimated_delivery_time} = response.data
+        setTrackingInfo(<TrackingInfoBox message={message} status={status} estimated_delivery_time={estimated_delivery_time}/>)
         } catch (e){
             setTrackingInfo(<TrackingInfoBox message="INVALID ORDER" status="INVALID ORDER"/>)
         }
@@ -30,7 +31,7 @@ export const TrackOrders = () => {
 
     return (
         <main>
-            <h1>Tracking 1 delivery</h1>
+            <h1>Tracking delivery</h1>w
             <h2>Enter order id:</h2>
             <form onSubmit={handleSubmit} method="POST">
                 <input
