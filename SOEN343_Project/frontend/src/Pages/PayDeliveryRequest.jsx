@@ -63,8 +63,9 @@ export const PayDeliveryRequest = () => {
           }
           console.log(data)
           const response = await axios.post("http://localhost:5000/payment/make_payment", data) // , + data in a object
-          console.log(response)
-          toast.success("Payment successful. Tokenizing")
+          console.log(response.data)
+          toast.success("Payment successful. Order id: " + response.data.order_id)
+
         } catch (e) {
           console.log("error making a payment: ", e)
         }
