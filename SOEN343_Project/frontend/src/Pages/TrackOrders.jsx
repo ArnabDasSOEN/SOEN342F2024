@@ -18,8 +18,9 @@ export const TrackOrders = () => {
             const response = await axios.post("http://localhost:5000/delivery_agent/track", data);
             console.log(response.data);
             const { message, status, estimated_delivery_time } = response.data;
+            let delTime = parseFloat(estimated_delivery_time).toFixed(2)
             setTrackingInfo(
-                <TrackingInfoBox message={message} status={status} estimated_delivery_time={estimated_delivery_time} />
+                <TrackingInfoBox message={message} status={status} estimated_delivery_time={delTime} />
             );
         } catch (e) {
             setTrackingInfo(
