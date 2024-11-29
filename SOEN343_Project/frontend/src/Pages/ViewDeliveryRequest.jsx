@@ -34,7 +34,7 @@ export const ViewDeliveryRequest = () => {
     return (
         <div className="view-delivery-request">
             <h1>Pending Delivery Request</h1>
-            <h2>Implement cancel as well from this</h2>
+            {/* <h2>Implement cancel as well from this</h2> */}
             <div className="view-delivery-request-container">
                 {requests}
             </div>

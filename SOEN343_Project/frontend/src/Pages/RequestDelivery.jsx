@@ -245,20 +245,6 @@ export const Dashboard = () => {
   //   navigate("/payDeliveryRequest", { state: { id, quotation } })
   // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <main className="dashboard">
       <ToastContainer/>

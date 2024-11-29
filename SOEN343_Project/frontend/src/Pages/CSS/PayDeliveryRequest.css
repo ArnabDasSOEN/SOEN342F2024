@@ -1,0 +1,65 @@
+.pay-delivery-request {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Avenir';
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 150px;
+  }
+  
+  .pay-delivery-request h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .pay-delivery-request h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .pay-delivery-request h4 {
+    font-size: 1.25rem;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  
+  .payment-form {
+    margin-bottom: 20px;
+  }
+  
+
+  .payment-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .payment-button:hover:not(:disabled) {
+    background-color: #218838;
+  }
+  
+  .payment-button:active {
+    background-color: #1e7e34;
+  }

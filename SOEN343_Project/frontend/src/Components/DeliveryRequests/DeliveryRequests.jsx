@@ -79,7 +79,7 @@ export const DeliveryRequest = ({ id, status, pickUp, dropOff, quotation }) => {
                     status !== "Cancelled" ? (
                         <>
                             <button onClick={handleWantToPay}>Want to pay now?</button>
-                            <button type="button" onClick={handleCancelDeliveryRequest}> cancel delivery request </button>
+                            <button type="button" onClick={handleCancelDeliveryRequest}> Cancel Delivery Request </button>
                         </>
                     ) : null
                 ) : null

@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from "react-router-dom";
+import './CSS/PayDeliveryRequest.css'
 
 //our Key values
 const SQUAREUP_APPLICATION_ID = process.env.REACT_APP_SQUAREUP_APPLICATION_ID;
@@ -81,21 +82,22 @@ export const PayDeliveryRequest = () => {
 
 
   return (
-    <main>
-      <h1>Pay for delivery request</h1>
-      <ToastContainer />
-      <form action="POST" onSubmit={handlePayment}>
-        <div className="PaymentForm">
+    <div className="pay-delivery-request">
+    <h1>Pay for Delivery Request</h1>
+    <ToastContainer />
+    <form action="POST" onSubmit={handlePayment}>
+      <div className="payment-form">
+        <div className="payment-statement">
           <h2>Payment Form</h2>
           <h4>${quotation}</h4>
-            {/* This div is where the Square card input will render */}
-            <div id="card-container"></div>
         </div>
-        <button type="submit" disabled={!paymentForm}>Pay Now</button>
-      </form>
-
-      <p>*note, you can always pay later by navigating to <b>my dashboard</b> and click <b>view my delivery requests</b> </p>
-    </main>
+        {/* This div is where the Square card input will render */}
+        <div id="card-container" className="card-container"></div>
+      </div>
+      <button type="submit" className="payment-button" disabled={!paymentForm}>Pay Now</button>
+    </form>
+    <p>*note, you can always pay later by navigating to <b>my dashboard</b> and click <b>view my delivery requests</b> </p>
+  </div>
   );
 }
 
