@@ -6,7 +6,8 @@ export const TrackingInfoBox = ({message, status, estimated_delivery_time}) => {
         <div>
             <h3>STATUS: {status}</h3>
             <h4>{message}</h4>
-            {estimated_delivery_time !== null ? <h5>ETA: {estimated_delivery_time}</h5> : null}
+            {typeof estimated_delivery_time !== "undefined" ? <h5>ETA: {estimated_delivery_time}</h5> : null}
+            
         </div>
     )
 }
