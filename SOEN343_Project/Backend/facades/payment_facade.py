@@ -70,7 +70,9 @@ class PaymentFacade:
                 "order_id": order.id
             })
 
-        return payment_success
+            return order.id  # Return the order ID
+
+        return None  # Return None if payment fails
 
     def get_payment_history(self, user_id):
         """

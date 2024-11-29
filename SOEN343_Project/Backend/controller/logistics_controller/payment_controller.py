@@ -33,12 +33,16 @@ def make_payment():
 
     try:
         payment_facade = current_app.config['payment_facade']
-        success = payment_facade.process_payment_and_create_order(
+        result = payment_facade.process_payment_and_create_order(
             delivery_request_id, payment_method
         )
 
-        if success:
-            return jsonify({"status": "Payment successful and order processed"}), 200
+        if result:  # If payment is successful and order created
+            return jsonify({
+                "status": "Payment successful and order processed",
+                "order_id": result  # Return the order ID
+            }), 200
+
         return jsonify({"error": "Payment processing failed"}), 500
     except ValueError as error:
         return jsonify({"error": str(error)}), 400
