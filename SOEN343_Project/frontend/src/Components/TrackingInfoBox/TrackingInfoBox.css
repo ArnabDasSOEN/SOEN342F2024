@@ -1,0 +1,28 @@
+.tracking-info-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Avenir', sans-serif;
+}
+
+.tracking-info-box h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tracking-info-box h4 {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.tracking-info-box h5 {
+    font-size: 1em;
+    color: #007bff;
+    margin-top: 10px;
+}
