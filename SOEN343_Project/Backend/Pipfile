@@ -12,6 +12,8 @@ flask-limiter = "*"
 requests = "*"
 python-dotenv = "*"
 squareup = "*"
+coverage = "*"
+pytest-mock = "*"
 
 [dev-packages]
 

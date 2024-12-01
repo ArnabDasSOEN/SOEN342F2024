@@ -18,7 +18,10 @@ CORS(chatbot_blueprint)
 
 @chatbot_blueprint.route('/ask', methods=['POST'])
 # @limiter.limit("3 per minute")  # Apply rate limiting
-def ask_chatbot():
+def ask_chatbot(session_state_override=None):
+    global session_state
+    if session_state_override is not None:
+        session_state = session_state_override
     """
     Handle user queries via chatbot with session-based flow.
     """

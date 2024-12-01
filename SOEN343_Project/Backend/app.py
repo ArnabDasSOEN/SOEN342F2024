@@ -46,7 +46,7 @@ def create_app(testing=False):
         event_dispatcher = EventDispatcher()
         quotation_service = QuotationService()
         payment_facade = PaymentFacade(event_dispatcher)
-        order_facade = OrderFacade()
+        order_facade = OrderFacade(db_session=db)
         delivery_request_facade = DeliveryRequestFacade()
 
         def handle_payment_successful(event_data):

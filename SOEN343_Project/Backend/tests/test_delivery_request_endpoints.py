@@ -1,6 +1,4 @@
-from dbconnection import db
-from models.logistics.delivery_request import DeliveryRequest
-from models.logistics.package import Package, FragilePackage
+from .test_utils import create_address, create_package, create_delivery_request
 
 
 def test_create_delivery_request_success(client):
@@ -113,42 +111,17 @@ def test_create_delivery_request_invalid_customer_id(client):
 
 def test_cancel_delivery_request_success(client):
     with client.application.app_context():
-        # Mock a package in the database
-        package = Package()
-        db.session.add(package)
-        db.session.commit()
-
-        # Mock addresses in the database
-        pick_up_address = Address(
-            street="123 Main St",
-            house_number="123",
-            apartment_number="2B",
-            postal_code="12345",
-            city="New York",
-            country="USA"
-        )
-        drop_off_address = Address(
-            street="456 Elm St",
-            house_number="456",
-            apartment_number="4A",
-            postal_code="67890",
-            city="Los Angeles",
-            country="USA"
-        )
-        db.session.add(pick_up_address)
-        db.session.add(drop_off_address)
-        db.session.commit()
-
-        # Mock a delivery request in the database
-        delivery_request = DeliveryRequest(
+        # Use test_utils to create entities
+        pick_up_address = create_address()
+        drop_off_address = create_address()
+        package = create_package()
+        delivery_request = create_delivery_request(
             customer_id=13,
-            package_id=package.id,  # Associate with the mock package
-            pick_up_address_id=pick_up_address.id,  # Associate with mock address
-            drop_off_address_id=drop_off_address.id,  # Associate with mock address
+            pick_up_address_id=pick_up_address.id,
+            drop_off_address_id=drop_off_address.id,
+            package_id=package.id,
             status="Pending"
         )
-        db.session.add(delivery_request)
-        db.session.commit()
 
         response = client.post('/delivery_request/cancel_delivery_request',
                                json={"delivery_request_id": delivery_request.id})
@@ -178,42 +151,17 @@ def test_cancel_delivery_request_not_found(client):
 
 def test_view_delivery_requests_success(client):
     with client.application.app_context():
-        # Mock a package in the database
-        package = Package()
-        db.session.add(package)
-        db.session.commit()
-
-        # Mock addresses in the database
-        pick_up_address = Address(
-            street="123 Main St",
-            house_number="123",
-            apartment_number="2B",
-            postal_code="12345",
-            city="New York",
-            country="USA"
-        )
-        drop_off_address = Address(
-            street="456 Elm St",
-            house_number="456",
-            apartment_number="4A",
-            postal_code="67890",
-            city="Los Angeles",
-            country="USA"
-        )
-        db.session.add(pick_up_address)
-        db.session.add(drop_off_address)
-        db.session.commit()
-
-        # Mock delivery requests in the database
-        delivery_request = DeliveryRequest(
+        # Use test_utils to create entities
+        pick_up_address = create_address()
+        drop_off_address = create_address()
+        package = create_package()
+        delivery_request = create_delivery_request(
             customer_id=13,
-            package_id=package.id,  # Associate with the mock package
-            pick_up_address_id=pick_up_address.id,  # Associate with mock address
-            drop_off_address_id=drop_off_address.id,  # Associate with mock address
+            pick_up_address_id=pick_up_address.id,
+            drop_off_address_id=drop_off_address.id,
+            package_id=package.id,
             status="Pending"
         )
-        db.session.add(delivery_request)
-        db.session.commit()
 
         response = client.post(
             '/delivery_request/view_delivery_requests', json={"user_id": 13})
